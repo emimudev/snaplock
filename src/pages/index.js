@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className="flex flex-1 font-sans text-4xl font-bold shadow-xl">
+        <h1 className="flex flex-1 font-sans text-3xl font-bold">
           Hello World
         </h1>
       </main>

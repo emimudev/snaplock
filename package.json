@@ -11,16 +11,19 @@
   "dependencies": {
     "eslint-config-next": "13.2.1",
     "next": "13.2.1",
+    "next-auth": "^4.19.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.13",
     "eslint": "^8.35.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
+    "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.3",
     "standard": "^17.0.0",
