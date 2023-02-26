@@ -9,10 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "eslint": "8.34.0",
     "eslint-config-next": "13.2.1",
     "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.4",
+    "prettier-plugin-tailwindcss": "^0.2.3",
+    "standard": "^17.0.0",
+    "tailwindcss": "^3.2.7"
   }
 }
