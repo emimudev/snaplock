@@ -1,9 +1,13 @@
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 // import { Inter } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const { data: session, status } = useSession()
+  const loading = status === 'loading'
+  // console.log({ 10: 10, session })
   return (
     <>
       <Head>
@@ -13,9 +17,37 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className="flex flex-1 font-sans text-3xl font-bold">
-          Hello World
-        </h1>
+        {loading && <p>Loading...</p>}
+        {!loading && !session && (
+          <p>You are not signed in, please sign in first</p>
+        )}
+        {!loading && session && (
+          <p>
+            You are signed in as {session.user.email} and you can now access
+          </p>
+        )}
+        {!session && (
+          <button
+            className="rounded bg-blue-500 p-2 text-white"
+            onClick={(e) => {
+              signIn('google')
+            }}
+          >
+            Sign in
+          </button>
+        )}
+        {session && (
+          <a
+            href={'/api/auth/signout'}
+            className="rounded bg-blue-500 p-2 text-white"
+            onClick={(e) => {
+              e.preventDefault()
+              signOut()
+            }}
+          >
+            Sign out
+          </a>
+        )}
       </main>
     </>
   )
