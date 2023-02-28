@@ -17,7 +17,7 @@ export default function Avatar({
         width={96}
         height={96}
         alt={alt ?? 'profile picture'}
-        referrerpolicy="no-referrer"
+        referrerPolicy="no-referrer"
         draggable="false"
       />
     </div>

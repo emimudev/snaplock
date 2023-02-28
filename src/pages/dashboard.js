@@ -5,10 +5,10 @@ import { signOut } from 'next-auth/react'
 export default function Dashboard({ user }) {
   return (
     <Layout user={user}>
-      <div>
+      <div className="flex min-h-[700px] flex-col">
         <a
           href={'/api/auth/signout'}
-          className="rounded bg-blue-500 p-2 text-white"
+          className="flex w-fit rounded bg-blue-500 p-2 text-white"
           onClick={(e) => {
             e.preventDefault()
             signOut()
