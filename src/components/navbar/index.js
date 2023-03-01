@@ -1,7 +1,7 @@
+import { Avatar } from '@/components'
 import { useLayoutContext } from '@/context/layoutContext'
 import { memo } from 'react'
 import { TiThMenu } from 'react-icons/ti'
-import Avatar from '../avatar'
 import { BrandHorizontal } from '../icons'
 
 function Navbar({ user }) {
