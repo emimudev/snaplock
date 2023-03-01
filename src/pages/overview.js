@@ -1,27 +1,29 @@
 import { Button, Layout } from '@/components'
-import { getServerUser } from '@/utils'
+import { getServerSession } from 'next-auth'
 import { signOut } from 'next-auth/react'
+import { authOptions } from './api/auth/[...nextauth]'
 
-export default function Overview({ user }) {
+export default function Overview() {
   return (
-    <Layout user={user}>
-      <Button
-        onClick={(e) => {
-          e.preventDefault()
-          signOut()
-        }}
-      >
-        Logout
-      </Button>
-    </Layout>
+    <Button
+      onClick={(e) => {
+        e.preventDefault()
+        signOut()
+      }}
+    >
+      Logout
+    </Button>
   )
 }
 
+Overview.getLayout = function getLayout({ props, page }) {
+  return <Layout {...props}>{page}</Layout>
+}
+
 export async function getServerSideProps({ req, res }) {
-  const { user } = await getServerUser(req, res)
   return {
     props: {
-      user
+      session: await getServerSession(req, res, authOptions)
     }
   }
 }

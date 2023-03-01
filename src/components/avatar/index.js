@@ -5,6 +5,7 @@ export default function Avatar({
   alt,
   size = 'md',
   className = '',
+  imageProps = {},
   ...props
 }) {
   return (
@@ -19,6 +20,7 @@ export default function Avatar({
         alt={alt ?? 'profile picture'}
         referrerPolicy="no-referrer"
         draggable="false"
+        {...imageProps}
       />
     </div>
   )

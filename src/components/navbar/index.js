@@ -18,14 +18,18 @@ function Navbar({ user }) {
         </button>
         <BrandHorizontal className="w-[140px] flex-[0_0_auto] lg:hidden" />
       </div>
-      <div></div>
+      <div>
+        <input placeholder="search" />
+      </div>
       <div className="flex gap-2">
         <ToggleTheme />
-        {user && (
-          <div>
-            <Avatar src={user?.image} alt={user?.name} />
-          </div>
-        )}
+        <div>
+          <Avatar
+            // imageProps={{ priority: true }}
+            src={user?.image}
+            alt={user?.name}
+          />
+        </div>
       </div>
     </div>
   )
