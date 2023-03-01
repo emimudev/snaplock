@@ -5,7 +5,7 @@ import Button from '../button'
 export default function ToggleTheme() {
   const { theme, toggleTheme } = useTheme()
   return (
-    <Button onClick={toggleTheme} ghost rounded>
+    <Button onClick={toggleTheme} onlyIcon ghost rounded>
       {!theme ? (
         ''
       ) : theme === 'light' ? (

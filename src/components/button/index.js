@@ -44,7 +44,7 @@ const buttonStyles = tv({
   variants: {
     color: {
       primary:
-        'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-600 dark:hover:bg-zinc-700',
+        'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-600/30 dark:hover:bg-zinc-700/60',
       secondary:
         'bg-sky-500 hover:bg-sky-600 text-white dark:bg-sky-600 dark:hover:bg-sky-700',
       success:
