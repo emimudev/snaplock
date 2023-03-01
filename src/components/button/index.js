@@ -1,3 +1,4 @@
+import { ImSpinner } from 'react-icons/im'
 import { tv } from 'tailwind-variants'
 
 export default function Button({
@@ -11,6 +12,7 @@ export default function Button({
   flat,
   ghost,
   shadow,
+  isLoading,
   ...props
 }) {
   return (
@@ -25,19 +27,21 @@ export default function Button({
         type,
         ghost,
         flat,
-        shadow
+        shadow,
+        isLoading
       })}
     >
+      {isLoading && <ImSpinner className="h-4 w-4 animate-spin" />}
       {children}
     </button>
   )
 }
 
 const buttonStyles = tv({
-  base: 'relative flex overflow-hidden items-center justify-center rounded-md font-medium focus:outline-none active:scale-[0.97] transition-transform focus-visible:ring hover:transition-colors',
+  base: 'relative gap-2 flex overflow-hidden items-center justify-center rounded-md font-medium focus:outline-none active:scale-[0.97] transition-transform focus-visible:ring hover:transition-colors',
   variants: {
     color: {
-      primary: 'bg-zinc-900 hover:bg-zinc-700 text-white',
+      primary: 'bg-gray-900 hover:bg-gray-700 text-white',
       secondary: 'bg-sky-500 hover:bg-sky-600 text-white',
       success: 'bg-emerald-500 hover:bg-emerald-600 text-white',
       warning: 'bg-amber-500 hover:bg-amber-600 text-white',
@@ -65,13 +69,16 @@ const buttonStyles = tv({
     },
     shadow: {
       true: ''
+    },
+    isLoading: {
+      true: 'pointer-events-none'
     }
   },
   compoundVariants: [
     {
       color: 'primary',
       bordered: true,
-      className: 'text-zinc-900 border-zinc-900 hover:bg-zinc-100'
+      className: 'text-gray-900 border-gray-900 hover:bg-gray-100'
     },
     {
       color: 'secondary',
@@ -123,7 +130,7 @@ const buttonStyles = tv({
     {
       color: 'primary',
       flat: true,
-      className: 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+      className: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
     },
     {
       color: 'secondary',
@@ -149,7 +156,7 @@ const buttonStyles = tv({
     {
       color: 'primary',
       ghost: true,
-      className: 'text-zinc-600 hover:bg-zinc-100'
+      className: 'text-gray-600 hover:bg-gray-100'
     },
     {
       color: 'secondary',
