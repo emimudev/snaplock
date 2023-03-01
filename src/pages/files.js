@@ -7,11 +7,3 @@ export default function FilesPage() {
 FilesPage.getLayout = function getLayout({ page, props }) {
   return <Layout {...props}>{page}</Layout>
 }
-
-// export async function getServerSideProps({ req, res }) {
-//   return {
-//     props: {
-//       session: await getServerSession(req, res, authOptions)
-//     }
-//   }
-// }

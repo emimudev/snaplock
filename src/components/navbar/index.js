@@ -4,11 +4,12 @@ import { memo } from 'react'
 import { TiThMenu } from 'react-icons/ti'
 import { BrandHorizontal } from '../icons'
 import ToggleTheme from '../toggle-theme'
+import UserPopover from '../user-popover'
 
 function Navbar({ user }) {
   const { toggleSidebar } = useLayoutContext()
   return (
-    <div className="relative flex h-[56px] w-full items-center justify-between gap-2 overflow-hidden border-b border-[rgba(24,24,27,.1)] px-4 dark:border-white/10 md:px-8">
+    <div className="relative flex h-[56px] w-full items-center justify-between gap-2  border-b border-[rgba(24,24,27,.1)] px-4 dark:border-white/10 md:px-8">
       <div className="flex items-center gap-5 lg:flex">
         <button
           className="flex flex-[0_0_auto] lg:hidden"
@@ -24,11 +25,13 @@ function Navbar({ user }) {
       <div className="flex gap-2">
         <ToggleTheme />
         <div>
-          <Avatar
-            // imageProps={{ priority: true }}
-            src={user?.image}
-            alt={user?.name}
-          />
+          <UserPopover>
+            <Avatar
+              // imageProps={{ priority: true }}
+              src={user?.image}
+              alt={user?.name}
+            />
+          </UserPopover>
         </div>
       </div>
     </div>

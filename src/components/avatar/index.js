@@ -1,3 +1,4 @@
+import useUser from '@/hooks/useUser'
 import Image from 'next/image'
 
 export default function Avatar({
@@ -28,6 +29,33 @@ export default function Avatar({
   )
 }
 
+Avatar.Logged = function LoggedAvatar({
+  size = 'md',
+  className = '',
+  imageProps = {},
+  ...props
+}) {
+  const { user } = useUser()
+  const { image: src, name: alt } = user
+  return (
+    <div
+      className={`flex items-center  justify-center overflow-hidden rounded-full ${SV[size]} ${className}`}
+      {...props}
+    >
+      {src && (
+        <Image
+          src={src}
+          width={96}
+          height={96}
+          alt={alt ?? 'profile picture'}
+          referrerPolicy="no-referrer"
+          draggable="false"
+          {...imageProps}
+        />
+      )}
+    </div>
+  )
+}
 /**
  * Size Variants
  */
