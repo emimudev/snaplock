@@ -1,67 +1,37 @@
 import { Button, Layout } from '@/components'
 import { getServerUser } from '@/utils'
+import { signOut } from 'next-auth/react'
+import { ImHome } from 'react-icons/im'
 
 export default function Overview({ user }) {
   return (
     <Layout user={user}>
-      {/* <Button
-        ghost
+      <Button
         onClick={(e) => {
           e.preventDefault()
           signOut()
         }}
       >
-        Sign out
-      </Button> */}
-      <Button>Hola mundo</Button>
-      <Button color="secondary">Hola mundo</Button>
-      <Button color="success">Hola mundo</Button>
-      <Button color="warning">Hola mundo</Button>
-      <Button color="danger">Hola mundo</Button>
-      <hr />
-      flat
-      <Button flat>Hola mundo</Button>
-      <Button color="secondary" flat>
-        Hola mundo
-      </Button>
-      <Button color="success" flat>
-        Hola mundo
-      </Button>
-      <Button color="warning" flat>
-        Hola mundo
-      </Button>
-      <Button color="danger" flat>
-        Hola mundo
+        Logout
       </Button>
       <hr />
-      bordered
-      <Button bordered>Hola mundo</Button>
-      <Button color="secondary" bordered>
-        Hola mundo
+      <Button size="xs" onlyIcon>
+        <ImHome />
       </Button>
-      <Button color="success" bordered>
-        Hola mundo
+      <Button size="sm" onlyIcon>
+        <ImHome />
       </Button>
-      <Button color="warning" bordered>
-        Hola mundo
+      <Button size="md" onlyIcon>
+        <ImHome />
       </Button>
-      <Button color="danger" bordered>
-        Hola mundo
+      <Button onlyIcon rounded ghost>
+        <ImHome />
       </Button>
-      <hr />
-      Ghost
-      <Button ghost>Hola mundo</Button>
-      <Button color="secondary" ghost>
-        Hola mundo
+      <Button size="lg" onlyIcon>
+        <ImHome />
       </Button>
-      <Button color="success" ghost>
-        Hola mundo
-      </Button>
-      <Button color="warning" ghost>
-        Hola mundo
-      </Button>
-      <Button color="danger" ghost>
-        Hola mundo
+      <Button size="xl" onlyIcon>
+        <ImHome />
       </Button>
     </Layout>
   )

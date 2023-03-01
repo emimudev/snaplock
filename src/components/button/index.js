@@ -13,6 +13,7 @@ export default function Button({
   ghost,
   shadow,
   isLoading,
+  onlyIcon,
   ...props
 }) {
   return (
@@ -28,7 +29,8 @@ export default function Button({
         ghost,
         flat,
         shadow,
-        isLoading
+        isLoading,
+        onlyIcon
       })}
     >
       {isLoading && <ImSpinner className="h-4 w-4 animate-spin" />}
@@ -51,6 +53,9 @@ const buttonStyles = tv({
         'bg-amber-500 hover:bg-amber-600 text-white dark:bg-yellow-600 dark:hover:bg-yellow-700',
       danger:
         'bg-red-500 hover:bg-red-600 text-white dark:bg-red-600 dark:hover:bg-red-700'
+    },
+    onlyIcon: {
+      true: 'p-0'
     },
     size: {
       xs: 'px-1.5 h-6 text-xs min-w-[5rem] rounded-[7px]',
@@ -80,6 +85,37 @@ const buttonStyles = tv({
     }
   },
   compoundVariants: [
+    // Icon only compound variants
+    {
+      onlyIcon: true,
+      size: 'xs',
+      className: 'p-0 min-h-[1.8rem] min-w-[1.8rem]'
+    },
+    {
+      onlyIcon: true,
+      size: 'sm',
+      className: 'p-0 min-h-[2.2rem] min-w-[2.2rem]'
+    },
+    {
+      onlyIcon: true,
+      size: 'md',
+      className: 'p-0 min-h-[2.5rem] min-w-[2.5rem]'
+    },
+    {
+      onlyIcon: true,
+      size: 'lg',
+      className: 'p-0 min-h-[48px] min-w-[48px]'
+    },
+    {
+      onlyIcon: true,
+      size: 'xl',
+      className: 'p-0 min-h-[56px] min-w-[56px]'
+    },
+    {
+      onlyIcon: true,
+      size: 'auto',
+      className: 'p-0 min-h-[2.5rem] min-w-[2.5rem]'
+    },
     // Bordered compound variants
     {
       color: 'primary',
@@ -207,6 +243,7 @@ const buttonStyles = tv({
     bordered: false,
     flat: false,
     ghost: false,
-    shadow: false
+    shadow: false,
+    onlyIcon: false
   }
 })
