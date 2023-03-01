@@ -8,7 +8,7 @@ export default async function middleware(req) {
   const session = await getToken({ req })
 
   if (session && req.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/dashboard', req.url))
+    return NextResponse.redirect(new URL('/overview', req.url))
   }
 
   if (!session && req.nextUrl.pathname !== '/') {

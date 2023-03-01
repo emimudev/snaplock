@@ -13,8 +13,8 @@ export default function Layout({ children, user }) {
           <header className="relative h-14 max-h-[56px] ">
             <Navbar user={user} />
           </header>
-          <div className="flex h-[calc(100%-56px)]">
-            <main className="flex flex-auto flex-col overflow-y-auto ">
+          <div className="flex h-[calc(100%-56px)] ">
+            <main className="flex-auto overflow-y-auto overflow-x-hidden ">
               {children}
             </main>
             <div className="flex-0 hidden min-w-[270px] lg:flex ">
@@ -44,7 +44,7 @@ function Sidebar() {
       <div
         onClick={toggleSidebar}
         className={`absolute z-[9999] h-screen w-screen bg-gray-600 bg-gradient-to-bl lg:hidden ${
-          isSidebarOpen ? 'opacity-50' : '-z-[1] opacity-0'
+          isSidebarOpen ? 'flex opacity-50' : 'hidden opacity-0'
         } transition-opacity duration-300`}
       />
     </div>

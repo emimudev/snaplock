@@ -1,9 +1,10 @@
 import { useLayoutContext } from '@/context/layoutContext'
+import { memo } from 'react'
 import { TiThMenu } from 'react-icons/ti'
 import Avatar from '../avatar'
 import { BrandHorizontal } from '../icons'
 
-export default function Navbar({ user }) {
+function Navbar({ user }) {
   const { toggleSidebar } = useLayoutContext()
   return (
     <div className="relative flex h-[56px] w-full items-center justify-between gap-2 overflow-hidden border-b border-[rgba(24,24,27,.1)] bg-white px-4 md:px-8 ">
@@ -27,3 +28,5 @@ export default function Navbar({ user }) {
     </div>
   )
 }
+
+export default memo(Navbar)
