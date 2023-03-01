@@ -7,7 +7,6 @@ import Head from 'next/head'
 export default function Home() {
   const { data: session, status } = useSession()
   const loading = status === 'loading'
-  // console.log({ 10: 10, session })
   return (
     <>
       <Head>
