@@ -1,7 +1,9 @@
 import { Navbar, Sidebar } from '@/components'
 import LayoutContextProvider from '@/context/layoutContext'
+import useUser from '@/hooks/useUser'
 
-export default function Layout({ user, children }) {
+export default function Layout({ children }) {
+  const { user } = useUser()
   return (
     <LayoutContextProvider>
       <div className="relative flex h-screen w-screen">

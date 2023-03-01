@@ -13,15 +13,17 @@ export default function Avatar({
       className={`flex items-center  justify-center overflow-hidden rounded-full ${SV[size]} ${className}`}
       {...props}
     >
-      <Image
-        src={src}
-        width={96}
-        height={96}
-        alt={alt ?? 'profile picture'}
-        referrerPolicy="no-referrer"
-        draggable="false"
-        {...imageProps}
-      />
+      {src && (
+        <Image
+          src={src}
+          width={96}
+          height={96}
+          alt={alt ?? 'profile picture'}
+          referrerPolicy="no-referrer"
+          draggable="false"
+          {...imageProps}
+        />
+      )}
     </div>
   )
 }

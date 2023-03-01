@@ -6,7 +6,7 @@ import Head from 'next/head'
 
 const inter = Inter({ subsets: ['latin'] })
 
-function AppPage({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const { session, ...restOfProps } = pageProps
   const user = session?.user
   const getLayout = Component.getLayout || (({ page }) => page)
@@ -36,5 +36,3 @@ function AppPage({ Component, pageProps }) {
     </SessionProvider>
   )
 }
-
-export default AppPage

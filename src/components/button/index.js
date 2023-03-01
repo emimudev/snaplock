@@ -14,10 +14,12 @@ export default function Button({
   shadow,
   isLoading,
   onlyIcon,
+  as = 'button',
   ...props
 }) {
+  const Element = as
   return (
-    <button
+    <Element
       {...props}
       className={buttonStyles({
         class: className,
@@ -35,7 +37,7 @@ export default function Button({
     >
       {isLoading && <ImSpinner className="h-4 w-4 animate-spin" />}
       {children}
-    </button>
+    </Element>
   )
 }
 
