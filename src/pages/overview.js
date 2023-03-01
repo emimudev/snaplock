@@ -1,17 +1,7 @@
-import { Button, Layout } from '@/components'
-import { signOut } from 'next-auth/react'
+import { Layout } from '@/components'
 
 export default function Overview() {
-  return (
-    <Button
-      onClick={(e) => {
-        e.preventDefault()
-        signOut()
-      }}
-    >
-      Logout
-    </Button>
-  )
+  return <h1>Overview</h1>
 }
 
 Overview.getLayout = function getLayout({ props, page }) {
