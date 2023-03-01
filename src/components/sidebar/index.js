@@ -9,7 +9,7 @@ export default function Sidebar() {
   return (
     <div className={'relative top-[56px] flex lg:top-0'}>
       <aside
-        className={`absolute left-0 z-[10000] flex h-screen w-[256px] flex-1 flex-col lg:fixed ${sidebarOpen} transform-gpu border-r border-[rgba(24,24,27,.1)] bg-white px-4 transition-transform dark:bg-[#18181b] lg:max-w-[256px] lg:translate-x-0 lg:px-6`}
+        className={`absolute left-0 z-[10000] flex h-screen w-[256px] flex-1 flex-col lg:fixed ${sidebarOpen} transform-gpu border-r border-[rgba(24,24,27,.1)] bg-white px-4 transition-transform dark:border-white/10 dark:bg-[#18181b] lg:max-w-[256px] lg:translate-x-0 lg:px-6`}
       >
         <div className="hidden min-h-[56px] items-center justify-between lg:flex">
           <BrandHorizontal className="w-[140px]" />

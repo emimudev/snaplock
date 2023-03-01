@@ -4,7 +4,7 @@ import LayoutContextProvider from '@/context/layoutContext'
 export default function Layout({ children, user }) {
   return (
     <LayoutContextProvider>
-      <div className="relative flex h-screen w-screen dark:bg-[#18181b]">
+      <div className="relative flex h-screen w-screen">
         <Sidebar />
         <div className="relative flex flex-1 flex-col transition-all lg:pl-[256px]">
           <header className="relative h-14 max-h-[56px] ">
