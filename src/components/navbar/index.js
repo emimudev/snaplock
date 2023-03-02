@@ -3,7 +3,6 @@ import { useLayoutContext } from '@/context/layoutContext'
 import { memo } from 'react'
 import { TiThMenu } from 'react-icons/ti'
 import { BrandHorizontal } from '../icons'
-import ToggleTheme from '../toggle-theme'
 import UserPopover from '../user-popover'
 
 function Navbar({ user }) {
@@ -23,7 +22,6 @@ function Navbar({ user }) {
         <input placeholder="search" />
       </div>
       <div className="flex gap-2">
-        <ToggleTheme />
         <div>
           <UserPopover>
             <Avatar

@@ -1,12 +1,17 @@
+import { useTheme } from '@/context/theme-context'
 import useUser from '@/hooks/useUser'
 import { Popover } from '@headlessui/react'
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { MdOutlineDarkMode } from 'react-icons/md'
 import { RiSettings3Line } from 'react-icons/ri'
 import { usePopper } from 'react-popper'
 import Avatar from '../avatar'
 import Button from '../button'
+import ToggleTheme from '../toggle-theme'
+
+// PONER EL DARK MODE EN EL POPUP
 
 function UserPopover({ children }) {
   const { user } = useUser()
@@ -46,15 +51,10 @@ function UserPopover({ children }) {
           <hr className="border-3 mt-4 border-slate-100 dark:border-zinc-600" />
           <div className="text-sm">
             <ul className="flex flex-col">
-              <li className="flex ">
-                <Link
-                  className="flex h-full w-full gap-4 px-3 py-3.5 hover:bg-emerald-50 dark:hover:bg-emerald-700/20"
-                  href="/settings"
-                >
-                  {<RiSettings3Line className="h-5 w-5" />}
-                  Settings
-                </Link>
-              </li>
+              <UserPopoverItem icon={RiSettings3Line} to="/settings">
+                Settings
+              </UserPopoverItem>
+              <ChangeThemeItem />
             </ul>
           </div>
         </div>
@@ -65,6 +65,37 @@ function UserPopover({ children }) {
         </div>
       </Popover.Panel>
     </Popover>
+  )
+}
+
+function UserPopoverItem({ icon, to, children }) {
+  const Icon = icon
+  return (
+    <li className="flex ">
+      <Link
+        href={to}
+        className="flex h-full w-full gap-4 px-3 py-3.5 hover:bg-emerald-50 dark:hover:bg-emerald-700/20"
+      >
+        <Icon className="h-5 w-5" />
+        {children}
+      </Link>
+    </li>
+  )
+}
+
+function ChangeThemeItem() {
+  const { toggleTheme } = useTheme()
+
+  return (
+    <li onClick={toggleTheme} className="group flex cursor-pointer">
+      <div className="flex h-full w-full items-center gap-4 px-3 py-3.5 hover:bg-emerald-50 dark:hover:bg-emerald-700/20">
+        <MdOutlineDarkMode className="h-5 w-5" />
+        <div className="flex w-full items-center justify-between">
+          <span>Dark theme</span>
+          <ToggleTheme />
+        </div>
+      </div>
+    </li>
   )
 }
 
