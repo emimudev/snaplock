@@ -18,9 +18,7 @@ function Navbar({ user }) {
         </button>
         <BrandHorizontal className="w-[140px] flex-[0_0_auto] lg:hidden" />
       </div>
-      <div>
-        <input placeholder="search" />
-      </div>
+      <div></div>
       <div className="flex gap-2">
         <div>
           <UserPopover>

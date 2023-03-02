@@ -7,11 +7,19 @@ export default function ToggleTheme({ type = 'switch', offElement = null }) {
 
   const indicatorPosition = theme === 'light' ? 'left-1' : 'left-8'
 
+  console.log('here')
   if (type === 'switch') {
     return (
-      <label className="group relative flex w-max cursor-pointer select-none items-center">
+      <label
+        onClick={(evt) => {
+          evt.preventDefault()
+          evt.stopPropagation()
+          toggleTheme()
+        }}
+        className="group relative flex w-max cursor-pointer select-none items-center"
+      >
         <input
-          onClick={() => toggleTheme()}
+          onChange={() => {}}
           checked={theme === 'dark'}
           type="checkbox"
           className="h-7 w-14 cursor-pointer appearance-none rounded-full border-2 transition-colors checked:border-emerald-600 checked:ring-green-500 focus:outline-none focus:ring-offset-2 focus:ring-offset-inherit focus-visible:ring-2 group-hover:border-emerald-300"
