@@ -1,8 +1,11 @@
 import { Navbar, Sidebar } from '@/components'
 import LayoutContextProvider from '@/context/layoutContext'
+import MainPageContextProvider from '@/context/mainPageContext'
 import useUser from '@/hooks/useUser'
+import AsideItemViewer from '../aside-item-viewer'
+import MainBarPage from '../main-bar-page'
 
-export default function Layout({ children }) {
+export default function Layout({ showMainBar = true, title, children }) {
   const { user } = useUser()
   return (
     <LayoutContextProvider>
@@ -12,13 +15,19 @@ export default function Layout({ children }) {
           <header className="relative h-14 max-h-[56px] ">
             <Navbar user={user} />
           </header>
-          <div className="flex h-[calc(100%-56px)] ">
-            <main className="flex-auto overflow-y-auto overflow-x-hidden ">
-              {children}
-            </main>
-            <div className="flex-0 hidden min-w-[270px] lg:flex ">
-              Item viewer
-            </div>
+          <div className="flex h-[calc(100%-56px)] flex-col">
+            <MainPageContextProvider>
+              {showMainBar && <MainBarPage title={title} />}
+              <main className="layout-main-content flex flex-auto overflow-x-hidden ">
+                <div
+                  candisablefolder="true"
+                  className="flex-auto overflow-y-auto"
+                >
+                  {children}
+                </div>
+                {showMainBar && <AsideItemViewer />}
+              </main>
+            </MainPageContextProvider>
           </div>
         </div>
       </div>

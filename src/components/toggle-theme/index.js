@@ -4,10 +4,8 @@ import Button from '../button'
 
 export default function ToggleTheme({ type = 'switch', offElement = null }) {
   const { theme, toggleTheme } = useTheme()
-
   const indicatorPosition = theme === 'light' ? 'left-1' : 'left-8'
 
-  console.log('here')
   if (type === 'switch') {
     return (
       <label

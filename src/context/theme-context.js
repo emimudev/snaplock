@@ -39,11 +39,13 @@ export default function ThemeContextProvider({ children }) {
 }
 
 function setLightTheme() {
+  document.documentElement.setAttribute('data-color-scheme', 'light')
   localStorage.setItem('color-theme', 'light')
   document.documentElement.classList.remove('dark')
 }
 
 function setDarkTheme() {
+  document.documentElement.setAttribute('data-color-scheme', 'dark')
   localStorage.setItem('color-theme', 'dark')
   document.documentElement.classList.add('dark')
 }

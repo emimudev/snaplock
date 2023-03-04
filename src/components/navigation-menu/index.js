@@ -1,23 +1,17 @@
+import { ROUTES } from '@/routes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useState } from 'react'
-import { BsFiles } from 'react-icons/bs'
-import { HiOutlineStar } from 'react-icons/hi'
-import {
-  RiBubbleChartLine,
-  RiDashboardLine,
-  RiDeleteBin7Line
-} from 'react-icons/ri'
 import { tv } from 'tailwind-variants'
 
 const NavigationContext = createContext()
 
 export default function NavigationMenu() {
   return (
-    <NavigationContextProvider routes={routes}>
+    <NavigationContextProvider routes={ROUTES}>
       <nav>
         <ul className="flex flex-col gap-1 overflow-x-hidden text-sm">
-          {routes.map((route) => (
+          {ROUTES.map((route) => (
             <NavItem key={route.name} to={route.path} icon={route.icon}>
               {route.name}
             </NavItem>
@@ -28,40 +22,11 @@ export default function NavigationMenu() {
   )
 }
 
-const routes = [
-  {
-    name: 'Overview',
-    icon: RiDashboardLine,
-    path: '/overview'
-  },
-  {
-    name: 'Files',
-    icon: BsFiles,
-    path: '/files'
-  },
-  {
-    name: 'Shared',
-    icon: RiBubbleChartLine,
-    path: '/shared'
-  },
-  {
-    name: 'Starred',
-    icon: HiOutlineStar,
-    path: '/favorites'
-  },
-  {
-    name: 'Recycle Bin',
-    icon: RiDeleteBin7Line,
-    path: '/bin'
-  }
-]
-
 function NavigationContextProvider({ children, routes }) {
   const { pathname } = useRouter()
   const [urlMatched, setUrlMatched] = useState(
     () => routes.find((route) => route.path === pathname)?.path || null
   )
-  console.log({ urlMatched, pathname })
   const isMatched = ({ path }) => path === urlMatched
 
   return (
@@ -83,9 +48,6 @@ const NavItemStyles = tv({
 })
 
 function NavItem({ icon, children, to }) {
-  // const { pathname } = useRouter()
-  // console.log({ pathname, to, match: pathname === to })
-  // const matchRoute = pathname === to
   const { isMatched, setUrlMatched } = useContext(NavigationContext)
   const matchRoute = isMatched({ path: to })
   const Icon = icon
@@ -95,12 +57,12 @@ function NavItem({ icon, children, to }) {
       className={NavItemStyles({ active: matchRoute })}
     >
       <Link
-        className="flex h-full w-full items-center gap-2 px-3 py-2"
+        className="flex h-full w-full items-center gap-3 px-3 py-2"
         href={to}
       >
         {icon && (
           <span>
-            <Icon className="h-4 w-4" />
+            <Icon className="h-[18px] w-[18px]" />
           </span>
         )}
         <div>{children}</div>

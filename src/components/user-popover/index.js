@@ -24,7 +24,7 @@ function UserPopover({ children }) {
   })
 
   return (
-    <Popover className="relative">
+    <Popover className="relative flex">
       <Popover.Button
         ref={setReferenceElement}
         className="rounded-full focus-within:outline-none focus:outline-none"
@@ -33,7 +33,7 @@ function UserPopover({ children }) {
       </Popover.Button>
 
       <Popover.Panel
-        className="absolute z-10 w-full max-w-[370px] rounded-2xl bg-slate-100 p-1.5 shadow-lg dark:bg-zinc-800"
+        className="absolute z-10 mb-3 max-h-[calc(100vh-66px)] w-full max-w-[370px] overflow-y-auto rounded-2xl bg-slate-100 p-1.5 shadow-lg dark:bg-zinc-800"
         ref={setPopperElement}
         style={styles.popper}
         {...attributes.popper}
