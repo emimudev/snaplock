@@ -58,6 +58,10 @@ const FolderSchema = new mongoose.Schema({
       type: Schema.Types.ObjectId,
       ref: 'User'
     }
+  },
+  isStarred: {
+    type: Boolean,
+    default: false
   }
 })
 
