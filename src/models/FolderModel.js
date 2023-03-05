@@ -26,6 +26,11 @@ const FolderSchema = new mongoose.Schema({
       }
     ]
   },
+  typeElement: {
+    type: String,
+    enum: ['folder', 'file'],
+    default: 'folder'
+  },
   parentFolder: {
     type: Schema.Types.ObjectId,
     ref: 'Folder',

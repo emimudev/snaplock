@@ -11,8 +11,6 @@ import Avatar from '../avatar'
 import Button from '../button'
 import ToggleTheme from '../toggle-theme'
 
-// PONER EL DARK MODE EN EL POPUP
-
 function UserPopover({ children }) {
   const { user } = useUser()
   const [referenceElement, setReferenceElement] = useState()

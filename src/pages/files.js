@@ -14,7 +14,18 @@ export default function FilesPage() {
       >
         <div className="flex flex-auto flex-col px-3.5 py-5">
           <section className=" ">
-            <div className="mb-3 font-semibold">Folders</div>
+            <div className="mb-3 flex items-center justify-between">
+              <span className="font-semibold">Folders</span>
+              <AddFolderButton
+                size="auto"
+                className="h-8"
+                onlyIcon={false}
+                ghost={false}
+                flat
+              >
+                New folder
+              </AddFolderButton>
+            </div>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-x-4 gap-y-3">
               <UserFolders />
             </div>
