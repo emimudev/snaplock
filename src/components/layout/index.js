@@ -5,7 +5,12 @@ import useUser from '@/hooks/useUser'
 import AsideItemViewer from '../aside-item-viewer'
 import MainBarPage from '../main-bar-page'
 
-export default function Layout({ showMainBar = true, title, children }) {
+export default function Layout({
+  showMainBar = true,
+  title,
+  children,
+  actions = null
+}) {
   const { user } = useUser()
   return (
     <LayoutContextProvider>
@@ -17,10 +22,10 @@ export default function Layout({ showMainBar = true, title, children }) {
           </header>
           <div className="flex h-[calc(100%-56px)] flex-col">
             <MainPageContextProvider>
-              {showMainBar && <MainBarPage title={title} />}
+              {showMainBar && <MainBarPage title={title} actions={actions} />}
               <main className="layout-main-content flex flex-auto overflow-x-hidden ">
                 <div
-                  candisablefolder="true"
+                  candisableitem="true"
                   className="flex-auto overflow-y-auto"
                 >
                   {children}

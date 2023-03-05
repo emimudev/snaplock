@@ -1,22 +1,15 @@
-import { useFoldersContext } from '@/context/foldersContext'
+import { useMainPageContext } from '@/context/mainPageContext'
 import { RiFolderFill } from 'react-icons/ri'
 
-export default function Folder({
-  id,
-  name,
-  type,
-  privacy,
-  location,
-  opened,
-  created,
-  edited
-}) {
-  const { activeFolder, setActiveFolder } = useFoldersContext()
-  const isActive = activeFolder === id
+export default function Folder(folder) {
+  const { id, name } = folder
+  const { activeItem, setActiveItem } = useMainPageContext()
+  const isActive = activeItem?.item?.id === id
+
   return (
     <div
-      candisablefolder="false"
-      onClick={() => setActiveFolder(id)}
+      candisableitem="false"
+      onClick={() => setActiveItem({ item: folder, type: 'folder' })}
       className={`group flex h-14 select-none gap-4 overflow-hidden rounded-lg border-2  ${
         isActive
           ? 'border-emerald-300/40 bg-emerald-100/30 text-emerald-500'
@@ -41,33 +34,4 @@ Folder.Skeleton = function FolderSkeleton() {
   return (
     <div className="flex h-12 animate-pulse rounded-lg border-2 bg-zinc-200/40" />
   )
-}
-
-export const FolderModel = {
-  name: 'Folder 1',
-  id: '1',
-  type: 'folder',
-  privacy: {
-    type: 'public',
-    members: [
-      { id: '1', name: 'User 1', image: '' },
-      { id: '2', name: 'User 2', image: '' }
-    ]
-  },
-  location: 'root',
-  opened: {
-    date: '2021-01-01',
-    whoOpened: { id: '1', name: 'User 1', image: '' }
-  },
-  created: {
-    date: '2021-01-01',
-    whoCreated: { id: '1', name: 'User 1', image: '' }
-  },
-  edited: {
-    date: '2021-01-01',
-    whoEdited: { id: '1', name: 'User 1', image: '' }
-  },
-  children: [
-    /* List of folders */
-  ]
 }
