@@ -211,7 +211,7 @@ const buttonStyles = tv({
       color: 'primary',
       ghost: true,
       className:
-        'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800'
+        'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-white/10'
     },
     {
       color: 'secondary',

@@ -10,7 +10,7 @@ export default function NavigationMenu() {
   return (
     <NavigationContextProvider routes={ROUTES}>
       <nav>
-        <ul className="flex flex-col gap-1 overflow-x-hidden text-sm">
+        <ul className="flex flex-col gap-1 overflow-x-hidden p-1 text-sm">
           {ROUTES.map((route) => (
             <NavItem key={route.name} to={route.path} icon={route.icon}>
               {route.name}
@@ -39,10 +39,10 @@ function NavigationContextProvider({ children, routes }) {
 }
 
 const NavItemStyles = tv({
-  base: 'flex rounded-md hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-white/5',
+  base: 'flex rounded-md hover:bg-white/80 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-400/10 dark:text-zinc-200 dark:hover:bg-white/5',
   variants: {
     active: {
-      true: 'font-semibold bg-emerald-100/70 text-emerald-600 hover:bg-emerald-100 dark:bg-emerald-400/10 dark:text-emerald-400 dark:hover:bg-emerald-400/30'
+      true: 'font-semibold bg-emerald-200/40 border-zinc-200 dark:border-zinc-400/10 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-400/10 dark:text-emerald-400 dark:hover:bg-emerald-400/30'
     }
   }
 })

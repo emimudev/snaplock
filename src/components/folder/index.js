@@ -90,10 +90,10 @@ export default function Folder(folder) {
       <div
         candisableitem="false"
         onClick={handleFolderClick}
-        className={`group flex h-14 select-none gap-4 overflow-hidden rounded-lg border shadow-md ${
+        className={`group flex h-14 select-none gap-2 overflow-hidden rounded-lg border shadow-md ${
           isActive
             ? 'border-emerald-300/40 bg-emerald-100/30 text-emerald-500 dark:bg-emerald-400/10 dark:text-emerald-200/80'
-            : 'hover:border-zinc-300 hover:bg-zinc-200/40 dark:border-white/10 dark:hover:bg-zinc-400/10'
+            : 'hover:border-zinc-300 hover:bg-zinc-100/50 dark:border-white/10 dark:hover:bg-zinc-400/10'
         }`}
       >
         <div className="flex flex-[0_0_50px] items-center justify-center ">
@@ -105,13 +105,17 @@ export default function Folder(folder) {
         </div>
         <div className="flex flex-auto items-center justify-between">
           <span
-            className={`text-[13px] leading-[13px] line-clamp-1 ${
+            className={`flex-auto text-[13px] leading-[13px] line-clamp-1 ${
               isActive && 'font-semibold'
             }`}
           >
             {name}
           </span>
-          {loadingDelete && <ImSpinner className="mx-2 h-5 w-5 animate-spin" />}
+          {loadingDelete && (
+            <div className="flex-0 flex items-center justify-center">
+              <ImSpinner className=" mx-2 h-5 w-5 animate-spin" />
+            </div>
+          )}
         </div>
       </div>
     </ContextMenu>

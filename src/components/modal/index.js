@@ -2,7 +2,7 @@ import { Dialog } from '@headlessui/react'
 import { tv } from 'tailwind-variants'
 
 const modalStyles = tv({
-  base: 'z-40 bg-white dark:bg-zinc-800 rounded-2xl w-full min-h-fit flex flex-col',
+  base: 'z-40 bg-white dark:bg-zinc-800 rounded-2xl w-full min-h-fit flex flex-col shadow-lg',
   variants: {
     size: {
       sm: 'max-w-sm',
@@ -23,7 +23,7 @@ export default function Modal({ isOpen, children, size = 'lg', onClose }) {
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <div
-        className="fixed inset-0 z-30 bg-slate-500/50 backdrop-blur-[2px] dark:bg-neutral-900/30"
+        className="fixed inset-0 z-30 bg-zinc-900 opacity-40 backdrop-blur-[2px]  dark:opacity-80 "
         aria-hidden="true"
       />
       <div className="fixed inset-0 z-30 flex items-center justify-center overflow-y-auto p-4">

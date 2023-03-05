@@ -3,7 +3,7 @@ import AddFolderButton from '@/components/add-folder-button'
 import FilesContextProvider from '@/context/filesContext'
 import { useMainPageContext } from '@/context/mainPageContext'
 
-export default function FilesPage() {
+export default function FolderPage() {
   const { isItemViewerVisible } = useMainPageContext()
 
   return (
@@ -44,12 +44,9 @@ function MainActions() {
   )
 }
 
-FilesPage.getLayout = function getLayout({ page, props }) {
+FolderPage.getLayout = function getLayout({ page, props }) {
   return (
-    <Layout
-      mainBarProps={{ title: 'My files', actions: <MainActions /> }}
-      {...props}
-    >
+    <Layout title="asdasd" actions={<MainActions />} {...props}>
       {page}
     </Layout>
   )

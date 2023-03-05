@@ -1,4 +1,4 @@
-import { useTheme } from '@/context/theme-context'
+import { useTheme } from '@/context/themeContext'
 import useUser from '@/hooks/useUser'
 import { Popover } from '@headlessui/react'
 import { signOut } from 'next-auth/react'

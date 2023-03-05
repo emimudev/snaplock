@@ -1,4 +1,4 @@
-import { useTheme } from '@/context/theme-context'
+import { useTheme } from '@/context/themeContext'
 import { MdCheck, MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import Button from '../button'
 

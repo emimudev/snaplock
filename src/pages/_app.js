@@ -1,4 +1,4 @@
-import ThemeContextProvider from '@/context/theme-context'
+import ThemeContextProvider from '@/context/themeContext'
 import '@/styles/globals.css'
 import { SessionProvider } from 'next-auth/react'
 import { Inter } from 'next/font/google'

@@ -3,7 +3,8 @@ import mongoose, { Schema } from 'mongoose'
 const FolderSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please provide a name for the folder']
+    required: [true, 'Please provide a name for the folder'],
+    maxlength: [100, 'Description cannot be more than 500 characters']
   },
   description: {
     type: String,
