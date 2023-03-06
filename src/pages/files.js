@@ -1,4 +1,4 @@
-import { Layout, UserFolders } from '@/components'
+import { Layout, PageFolders } from '@/components'
 import AddFolderButton from '@/components/add-folder-button'
 import FilesContextProvider from '@/context/filesContext'
 import { useMainPageContext } from '@/context/mainPageContext'
@@ -27,7 +27,7 @@ export default function FilesPage() {
               </AddFolderButton>
             </div>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-x-4 gap-y-3">
-              <UserFolders />
+              <PageFolders />
             </div>
           </section>
         </div>

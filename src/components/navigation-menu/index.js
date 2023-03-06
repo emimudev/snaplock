@@ -1,40 +1,19 @@
-import { ROUTES } from '@/routes'
+import { SIDEBAR_ROUTES } from '@/routes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useState } from 'react'
 import { tv } from 'tailwind-variants'
-
-const NavigationContext = createContext()
 
 export default function NavigationMenu() {
   return (
-    <NavigationContextProvider routes={ROUTES}>
-      <nav>
-        <ul className="flex flex-col gap-1 overflow-x-hidden p-1 text-sm">
-          {ROUTES.map((route) => (
-            <NavItem key={route.name} to={route.path} icon={route.icon}>
-              {route.name}
-            </NavItem>
-          ))}
-        </ul>
-      </nav>
-    </NavigationContextProvider>
-  )
-}
-
-function NavigationContextProvider({ children, routes }) {
-  const { pathname } = useRouter()
-  const [urlMatched, setUrlMatched] = useState(
-    () => routes.find((route) => route.path === pathname)?.path || null
-  )
-  const isMatched = ({ path }) => path === urlMatched
-
-  return (
-    <NavigationContext.Provider
-      value={{ urlMatched, setUrlMatched, isMatched }}
-    >
-      {children}
-    </NavigationContext.Provider>
+    <nav>
+      <ul className="flex flex-col gap-1 overflow-x-hidden p-1 text-sm">
+        {SIDEBAR_ROUTES.map((route) => (
+          <NavItem key={route.name} to={route.path} icon={route.icon}>
+            {route.name}
+          </NavItem>
+        ))}
+      </ul>
+    </nav>
   )
 }
 
@@ -48,14 +27,11 @@ const NavItemStyles = tv({
 })
 
 function NavItem({ icon, children, to }) {
-  const { isMatched, setUrlMatched } = useContext(NavigationContext)
-  const matchRoute = isMatched({ path: to })
+  const router = useRouter()
+  const matchRoute = to === router.pathname
   const Icon = icon
   return (
-    <li
-      onClick={() => setUrlMatched(to)}
-      className={NavItemStyles({ active: matchRoute })}
-    >
+    <li className={NavItemStyles({ active: matchRoute })}>
       <Link
         className="flex h-full w-full items-center gap-3 px-3 py-2"
         href={to}

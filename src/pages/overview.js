@@ -4,7 +4,7 @@ export default function Overview() {
   return <h1>Overview</h1>
 }
 
-Overview.getLayout = function getLayout({ props, page }) {
+Overview.getLayout = function getLayout({ page, ...props }) {
   return <Layout {...props}>{page}</Layout>
 }
 

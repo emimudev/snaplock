@@ -1,33 +1,41 @@
 import axios from 'axios'
 import { BASE_URL } from './config'
 
-const ENTRY_POINT = 'folders'
-export const FOLDERS_API_URL = `${BASE_URL}/${ENTRY_POINT}`
+export const FOLDERS_API_URL = `${BASE_URL}/folders`
+export const SUBFOLDERS_API_URL = `${BASE_URL}/subfolders`
 
 const foldersAPI = {
   getFolders() {
-    return axios
-      .get(`${BASE_URL}/${ENTRY_POINT}`)
-      .then((response) => response.data)
+    return axios.get(`${FOLDERS_API_URL}`).then((response) => response.data)
   },
   getFolder({ id }) {
     return axios
-      .get(`${BASE_URL}/${ENTRY_POINT}/${id}`)
+      .get(`${FOLDERS_API_URL}/${id}`)
       .then((response) => response.data)
   },
   createFolder(folder) {
     return axios
-      .post(`${BASE_URL}/${ENTRY_POINT}`, folder)
+      .post(`${FOLDERS_API_URL}`, folder)
       .then((response) => response.data)
   },
   updateFolder({ id, folder }) {
     return axios
-      .put(`${BASE_URL}/${ENTRY_POINT}/${id}`, folder)
+      .put(`${FOLDERS_API_URL}/${id}`, folder)
       .then((response) => response.data)
   },
   deleteFolder({ id }) {
     return axios
-      .delete(`${BASE_URL}/${ENTRY_POINT}/${id}`)
+      .delete(`${FOLDERS_API_URL}/${id}`)
+      .then((response) => response.data)
+  },
+  getSubFolders({ parentFolderId }) {
+    return axios
+      .get(`${SUBFOLDERS_API_URL}/${parentFolderId}`)
+      .then((response) => response.data)
+  },
+  createSubFolder({ parentFolderId, folder }) {
+    return axios
+      .post(`${SUBFOLDERS_API_URL}/${parentFolderId}`, folder)
       .then((response) => response.data)
   }
 }

@@ -6,7 +6,7 @@ import {
   RiDeleteBin7Line
 } from 'react-icons/ri'
 
-export const ROUTES = [
+export const SIDEBAR_ROUTES = [
   {
     name: 'Overview',
     icon: RiDashboardLine,
@@ -25,7 +25,7 @@ export const ROUTES = [
   {
     name: 'Starred',
     icon: HiOutlineStar,
-    path: '/favorites'
+    path: '/starred'
   },
   {
     name: 'Recycle Bin',
@@ -33,3 +33,20 @@ export const ROUTES = [
     path: '/bin'
   }
 ]
+
+export const ROUTES = [
+  ...SIDEBAR_ROUTES,
+  {
+    name: 'Search',
+    path: '/search'
+  }
+]
+
+export const ROUTES_TITLE = {
+  '/overview': 'Overview',
+  '/files': 'My files',
+  '/shared': 'Shared with me',
+  '/favorites': 'Starred',
+  '/bin': 'Recycle Bin',
+  '/search': 'Search results'
+}

@@ -1,7 +1,7 @@
 import { useFilesContext } from '@/context/filesContext'
 import Folder from '../folder'
 
-export default function UserFolders() {
+export default function PageFolders() {
   const { folders, foldersLoading } = useFilesContext()
 
   if (foldersLoading) return <Skeleton />

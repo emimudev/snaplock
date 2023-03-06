@@ -1,7 +1,9 @@
-import { Layout, UserFolders } from '@/components'
+import { getFolderById } from '@/api-utils/folders'
+import { Layout, PageFolders } from '@/components'
 import AddFolderButton from '@/components/add-folder-button'
 import FilesContextProvider from '@/context/filesContext'
 import { useMainPageContext } from '@/context/mainPageContext'
+import dbConnect from '@/lib/dbConnnect'
 
 export default function FolderPage() {
   const { isItemViewerVisible } = useMainPageContext()
@@ -27,7 +29,7 @@ export default function FolderPage() {
               </AddFolderButton>
             </div>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-x-4 gap-y-3">
-              <UserFolders />
+              <PageFolders />
             </div>
           </section>
         </div>
@@ -45,9 +47,20 @@ function MainActions() {
 }
 
 FolderPage.getLayout = function getLayout({ page, props }) {
+  const { folder } = props
   return (
-    <Layout title="asdasd" actions={<MainActions />} {...props}>
+    <Layout folder={folder} actions={<MainActions />} {...props}>
       {page}
     </Layout>
   )
+}
+export async function getServerSideProps(context) {
+  const { folderId } = context.params
+  await dbConnect()
+  const folder = await getFolderById({ folderId })
+  return {
+    props: {
+      folder: JSON.parse(JSON.stringify(folder))
+    }
+  }
 }

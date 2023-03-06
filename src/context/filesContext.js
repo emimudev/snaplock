@@ -1,18 +1,26 @@
 import services from '@/services'
-import { FOLDERS_API_URL } from '@/services/foldersAPI'
 import { createContext, useContext } from 'react'
 import useSWR from 'swr'
+import { useLayoutContext } from './layoutContext'
 
 const fetcher = () => services.folders.getFolders()
+const fetcherSubFolders = ({ parentFolderId }) => {
+  return () => services.folders.getSubFolders({ parentFolderId })
+}
 
 const FilesContext = createContext()
 
 export default function FilesContextProvider({ children }) {
+  const { urlFolderContext, folder } = useLayoutContext()
+  console.log({ inside: urlFolderContext })
   const {
     data: folders,
     error: foldersError,
     isLoading: foldersLoading
-  } = useSWR(FOLDERS_API_URL, fetcher)
+  } = useSWR(
+    urlFolderContext,
+    folder ? fetcherSubFolders({ parentFolderId: folder.id }) : fetcher
+  )
 
   return (
     <FilesContext.Provider value={{ folders, foldersError, foldersLoading }}>

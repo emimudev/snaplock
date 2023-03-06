@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }) {
       <ThemeContextProvider>
         {getLayout({
           page: <Component {...restOfProps} />,
-          props: { user }
+          props: { user, ...restOfProps }
         })}
       </ThemeContextProvider>
     </SessionProvider>

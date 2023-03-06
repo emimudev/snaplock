@@ -1,10 +1,10 @@
 import { Layout } from '@/components'
 
-export default function FavoritesPage() {
+export default function StarredPage() {
   return <h1>Favoritos</h1>
 }
 
-FavoritesPage.getLayout = function getLayout({ page, props }) {
+StarredPage.getLayout = function getLayout({ page, props }) {
   return <Layout {...props}>{page}</Layout>
 }
 

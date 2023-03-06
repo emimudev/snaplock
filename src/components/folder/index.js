@@ -1,6 +1,6 @@
+import { useLayoutContext } from '@/context/layoutContext'
 import { useMainPageContext } from '@/context/mainPageContext'
 import services from '@/services'
-import { FOLDERS_API_URL } from '@/services/foldersAPI'
 import { useRouter } from 'next/router'
 import { HiOutlineStar } from 'react-icons/hi'
 import { ImSpinner } from 'react-icons/im'
@@ -17,6 +17,7 @@ import ContextMenu from '../context-menu'
 const fetcher = (url, { arg: folder }) => services.folders.deleteFolder(folder)
 
 function useFolder(folder) {
+  const { urlFolderContext } = useLayoutContext()
   const { id } = folder
   const { activeItem, setActiveItem, showItemViewer } = useMainPageContext()
   const router = useRouter()
@@ -24,7 +25,7 @@ function useFolder(folder) {
     trigger,
     isMutating: loadingDelete,
     error: deleteError
-  } = useSWRMutation(FOLDERS_API_URL, fetcher)
+  } = useSWRMutation(urlFolderContext, fetcher)
   const isActive = activeItem?.item?.id === id
 
   const handleFolderClick = (e) => {
@@ -105,7 +106,7 @@ export default function Folder(folder) {
         </div>
         <div className="flex flex-auto items-center justify-between">
           <span
-            className={`flex-auto text-[13px] leading-[13px] line-clamp-1 ${
+            className={`flex-auto text-[13px] leading-[16px] line-clamp-1 ${
               isActive && 'font-semibold'
             }`}
           >

@@ -1,5 +1,5 @@
+import { useLayoutContext } from '@/context/layoutContext'
 import services from '@/services'
-import { FOLDERS_API_URL } from '@/services/foldersAPI'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { RiFolderAddFill } from 'react-icons/ri'
@@ -11,8 +11,9 @@ import Modal from '../modal'
 const fetcher = (url, { arg: folder }) => services.folders.createFolder(folder)
 
 export default function AddFolderButton({ children, ...props }) {
+  const { urlFolderContext } = useLayoutContext()
   const { trigger, isMutating, error } = useSWRMutation(
-    FOLDERS_API_URL,
+    urlFolderContext,
     fetcher
   )
   const [value, setValue] = useState('')

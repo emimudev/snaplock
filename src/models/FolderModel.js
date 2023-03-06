@@ -47,25 +47,28 @@ const FolderSchema = new mongoose.Schema({
       ref: 'Folder'
     }
   ],
-  opened: {
-    date: Date,
-    whoOpened: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      default: null
-    }
+  dateOpened: {
+    type: Date,
+    default: null
   },
-  created: {
-    date: {
-      type: Date,
-      default: Date.now
-    },
-    whoCreated: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+  whoOpened: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  },
+  whoCreated: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   isStarred: {
+    type: Boolean,
+    default: false
+  },
+  isDeleted: {
     type: Boolean,
     default: false
   }

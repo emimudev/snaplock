@@ -5,10 +5,15 @@ import useUser from '@/hooks/useUser'
 import AsideItemViewer from '../aside-item-viewer'
 import MainBarPage from '../main-bar-page'
 
-export default function Layout({ showMainBar = true, children, mainBarProps }) {
+export default function Layout({
+  folder,
+  showMainBar = true,
+  children,
+  mainBarProps
+}) {
   const { user } = useUser()
   return (
-    <LayoutContextProvider>
+    <LayoutContextProvider folder={folder}>
       <div className="relative flex h-screen w-screen dark:bg-zinc-800">
         <Sidebar />
         <div className="relative flex flex-1 flex-col transition-all lg:pl-[256px]">
