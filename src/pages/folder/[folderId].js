@@ -1,4 +1,4 @@
-import { getFolderById } from '@/api-utils/folders'
+import { getAndUpdateFolder } from '@/api-utils/folders'
 import { Layout, PageFolders } from '@/components'
 import AddFolderButton from '@/components/add-folder-button'
 import FilesContextProvider from '@/context/filesContext'
@@ -61,7 +61,10 @@ FolderPage.getLayout = function getLayout({ page, props }) {
 export async function getServerSideProps(context) {
   const { folderId } = context.params
   await dbConnect()
-  const folder = await getFolderById({ folderId })
+  const folder = await getAndUpdateFolder(
+    { _id: folderId },
+    { dateOpened: Date.now() }
+  )
   return {
     props: {
       folder: JSON.parse(JSON.stringify(folder))

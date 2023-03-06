@@ -18,7 +18,7 @@ const fetcherSubFolder = async (url, { arg }) => {
 
 export default function AddFolderButton({ children, ...props }) {
   const { urlFolderContext, folder } = useLayoutContext()
-  console.log({ urlFolderContextButton: urlFolderContext })
+
   const { trigger, isMutating, error } = useSWRMutation(
     urlFolderContext,
     folder ? fetcherSubFolder : fetcher

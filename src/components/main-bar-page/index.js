@@ -17,7 +17,7 @@ function MainBarPage({ title, actions }) {
         {<BreadCrumbs folder={folder} />}
         {<h1 className="text-lg font-semibold">{pageTitle}</h1>}
       </div>
-      <div className="flex-0 flex min-w-[calc(270px-16px)] justify-end gap-2">
+      <div className="flex-0 flex  justify-end gap-2">
         <div className="flex items-center">{actions}</div>
         <div className="flex items-center">
           <Button onClick={toggleItemViewer} ghost rounded onlyIcon size="sm">
@@ -35,7 +35,7 @@ function BreadCrumbs({ folder }) {
   const { id: userId } = user
   const { parentFolders } = folder
   const root = getRoot({ folder, userId })
-  console.log({ root, folder })
+
   return (
     <div className="flex items-center gap-1">
       <BreadCrumbItem path={root.path} name={root.name} />

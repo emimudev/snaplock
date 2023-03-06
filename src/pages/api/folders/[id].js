@@ -1,6 +1,8 @@
-import { getFolderById } from '@/api-utils/folders'
+import { getAndUpdateFolder, getFolderById } from '@/api-utils/folders'
 import dbConnect from '@/lib/dbConnnect'
 import FolderModel from '@/models/FolderModel'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]'
 
 export default async function handler(req, res) {
   const {
@@ -13,7 +15,11 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const folder = await getFolderById({ folderId: id })
+        const { user } = await getServerSession(req, res, authOptions)
+        const folder = await getAndUpdateFolder(
+          { _id: id },
+          { dateOpened: Date.now, whoOpened: user.id }
+        )
         if (!folder) {
           return res.status(400).json({ success: false })
         }

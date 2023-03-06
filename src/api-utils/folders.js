@@ -1,6 +1,12 @@
 import FolderModel from '@/models/FolderModel'
 import UserModel from '@/models/UserModel'
 
+export async function getAndUpdateFolder(filter, update) {
+  return FolderModel.findOneAndUpdate(filter, update, { new: true }).populate(
+    DEFAULT_POPULATE_OPTIONS
+  )
+}
+
 export async function getFolderById({ folderId }) {
   return FolderModel.findById(folderId).populate(DEFAULT_POPULATE_OPTIONS)
 }
