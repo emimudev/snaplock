@@ -8,7 +8,6 @@ export default function LayoutContextProvider({ folder, children }) {
   const urlFolderContext = folder
     ? `${SUBFOLDERS_API_URL}/${folder.id}`
     : FOLDERS_API_URL
-  console.log({ urlFolderContext })
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev)
   const closeSidebar = () => setIsSidebarOpen(false)
   const openSidebar = () => setIsSidebarOpen(true)

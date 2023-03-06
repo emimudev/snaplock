@@ -1,0 +1,5 @@
+export const FILE_MEASURES = {
+  KB: 1024,
+  MB: 1048576,
+  MAX_STORAGE: 209715200
+}
