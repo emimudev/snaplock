@@ -34,7 +34,7 @@ function useFolder(folder) {
         setActiveItem({ item: folder, type: 'folder' })
         break
       case 2:
-        router.push(`/folder/${id}`)
+        router.push(`/folder/${id}`).finally(() => setActiveItem(null))
         break
     }
   }
@@ -125,7 +125,7 @@ export default function Folder(folder) {
 
 Folder.Skeleton = function FolderSkeleton() {
   return (
-    <div className="flex h-12 animate-pulse rounded-lg border-2 bg-zinc-200/40" />
+    <div className="flex h-12 animate-pulse rounded-lg border-2 bg-zinc-200/40 dark:border-white/10 dark:bg-zinc-400/10" />
   )
 }
 

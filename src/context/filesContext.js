@@ -12,7 +12,7 @@ const FilesContext = createContext()
 
 export default function FilesContextProvider({ children }) {
   const { urlFolderContext, folder } = useLayoutContext()
-  console.log({ inside: urlFolderContext })
+
   const {
     data: folders,
     error: foldersError,

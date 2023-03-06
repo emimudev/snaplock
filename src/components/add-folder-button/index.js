@@ -8,13 +8,20 @@ import Button from '../button'
 import Input from '../input'
 import Modal from '../modal'
 
-const fetcher = (url, { arg: folder }) => services.folders.createFolder(folder)
+const fetcher = (url, { arg: { folder } }) =>
+  services.folders.createFolder(folder)
+
+const fetcherSubFolder = async (url, { arg }) => {
+  const { folder, parentFolderId } = arg
+  return services.folders.createSubFolder({ parentFolderId, folder })
+}
 
 export default function AddFolderButton({ children, ...props }) {
-  const { urlFolderContext } = useLayoutContext()
+  const { urlFolderContext, folder } = useLayoutContext()
+  console.log({ urlFolderContextButton: urlFolderContext })
   const { trigger, isMutating, error } = useSWRMutation(
     urlFolderContext,
-    fetcher
+    folder ? fetcherSubFolder : fetcher
   )
   const [value, setValue] = useState('')
   const router = useRouter()
@@ -32,7 +39,7 @@ export default function AddFolderButton({ children, ...props }) {
       name: value,
       parentFolder: folderId || null
     }
-    trigger(folderToAdd)
+    trigger({ folder: folderToAdd, parentFolderId: folderId })
       .then(() => {
         setValue('')
         handleClose()

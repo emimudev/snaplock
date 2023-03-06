@@ -49,7 +49,11 @@ function MainActions() {
 FolderPage.getLayout = function getLayout({ page, props }) {
   const { folder } = props
   return (
-    <Layout folder={folder} actions={<MainActions />} {...props}>
+    <Layout
+      folder={folder}
+      mainBarProps={{ actions: <MainActions /> }}
+      {...props}
+    >
       {page}
     </Layout>
   )

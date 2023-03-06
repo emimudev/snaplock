@@ -50,6 +50,7 @@ export default async function handler(req, res) {
         ]
         folderModel.privacy.members = [session.user.id]
         folderModel.hierarchyLevel = parentFolder.hierarchyLevel + 1
+        console.log({ parentFolder, folderModel })
         const folderSaved = await folderModel.save()
         res.status(200).json({ folderSaved })
       } catch (error) {

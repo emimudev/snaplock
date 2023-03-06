@@ -36,7 +36,12 @@ export default function Button({
       })}
     >
       {isLoading && <ImSpinner className="h-4 w-4 animate-spin" />}
-      {children}
+      {typeof children === 'string' ? (
+        <span className="line-clamp-1">{children}</span>
+      ) : (
+        children
+      )}
+      {''}
     </Element>
   )
 }
