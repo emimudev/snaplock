@@ -50,7 +50,7 @@ function NavItem({ icon, soon, children, to }) {
           <div>{children}</div>
         </div>
         {soon && (
-          <span className="absolute right-1 flex items-center gap-1 rounded-full border p-[2px] px-2 text-xs dark:border-white/30 dark:text-white/40">
+          <span className="absolute right-1 flex items-center gap-1 rounded-full  p-[2px] px-2 text-xs text-zinc-400/80 dark:border-white/30 dark:text-white/40">
             <span>Soon</span>
           </span>
         )}
