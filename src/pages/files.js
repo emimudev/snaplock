@@ -19,12 +19,8 @@ export default function FilesPage() {
         >
           <div className="flex flex-auto flex-col gap-9 px-4 py-5 lg:px-8">
             <PageEmpty />
-            <section className=" ">
-              <PageFolders />
-            </section>
-            <section className=" ">
-              <FolderFiles />
-            </section>
+            <PageFolders />
+            <FolderFiles />
           </div>
         </div>
       </SurfaceUploader>

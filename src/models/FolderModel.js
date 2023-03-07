@@ -78,10 +78,10 @@ const FolderSchema = new mongoose.Schema({
   }
 })
 
-FolderSchema.index(
-  { name: 1, owner: 1, parentFolder: 1 },
-  { unique: true, sparse: true }
-)
+// FolderSchema.index(
+//   { name: 1, owner: 1, parentFolder: 1 },
+//   { unique: true, sparse: true }
+// )
 
 FolderSchema.set('toJSON', {
   virtuals: true

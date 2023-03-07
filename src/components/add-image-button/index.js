@@ -5,6 +5,7 @@ import { IMAGES_API_URL } from '@/services/imagesAPI'
 import { FILE_MEASURES } from '@/utils-browser'
 import Dropzone from 'react-dropzone'
 import { toast } from 'react-hot-toast'
+import { useSWRConfig } from 'swr'
 import useSWRMutation from 'swr/mutation'
 import Button from '../button'
 
@@ -17,11 +18,14 @@ export default function AddImageButton({ children, ...props }) {
   const { folder, rootDir } = useLayoutContext()
   const URL_KEY = `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`
   const { trigger } = useSWRMutation(URL_KEY, fetcher)
+  const { mutate } = useSWRConfig()
 
   const onDropAccepted = (acceptedFiles) => {
     toast.promise(
       trigger({ folder, images: acceptedFiles, userId: user.id })
-        .then((info) => {})
+        .then((info) => {
+          mutate('/api/storage')
+        })
         .catch((error) => console.log({ error })),
       {
         loading: 'Uploading images...',

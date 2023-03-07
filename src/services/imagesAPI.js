@@ -49,6 +49,9 @@ const imagesAPI = {
     return axios
       .delete(`${IMAGES_API_URL}/${id}`)
       .then((response) => response.data)
+  },
+  getStorage() {
+    return axios.get(`${BASE_URL}/storage`).then((response) => response.data)
   }
 }
 
