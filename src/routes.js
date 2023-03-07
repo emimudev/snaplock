@@ -20,12 +20,14 @@ export const SIDEBAR_ROUTES = [
   {
     name: 'Shared with me',
     icon: RiBubbleChartLine,
-    path: '/shared'
+    path: '/shared',
+    soon: true
   },
   {
     name: 'Starred',
     icon: HiOutlineStar,
-    path: '/starred'
+    path: '/starred',
+    soon: true
   },
   {
     name: 'Recycle Bin',
