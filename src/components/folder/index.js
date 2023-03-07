@@ -2,6 +2,7 @@ import { useLayoutContext } from '@/context/layoutContext'
 import { useMainPageContext } from '@/context/mainPageContext'
 import services from '@/services'
 import { useRouter } from 'next/router'
+import { toast } from 'react-hot-toast'
 import { HiOutlineStar } from 'react-icons/hi'
 import { ImSpinner } from 'react-icons/im'
 import { MdDriveFileRenameOutline } from 'react-icons/md'
@@ -44,13 +45,21 @@ function useFolder(folder) {
   }
 
   const removeFolder = () => {
-    trigger(folder)
-      .then(() => {
-        setActiveItem(null)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    toast.promise(
+      trigger(folder)
+        .then(() => {
+          setActiveItem(null)
+        })
+        .catch((err) => {
+          console.log(err)
+        }),
+      {
+        loading: 'Moving folder to trash bin...',
+        success: 'Folder has been moved to trash bin',
+        error: 'Error deleting folder'
+      },
+      { position: 'top-center' }
+    )
   }
 
   const viewDetails = () => {

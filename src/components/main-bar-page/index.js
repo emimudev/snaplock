@@ -12,7 +12,7 @@ function MainBarPage({ title, actions }) {
 
   const pageTitle = folder ? folder?.name : title
   return (
-    <div className="flex h-full max-h-[42px] items-center justify-between border-b px-4 dark:border-white/10">
+    <div className="flex h-full max-h-[42px] items-center justify-between border-b px-4 dark:border-white/10 lg:pl-8">
       <div className="flex flex-1 items-center gap-2 ">
         {<BreadCrumbs folder={folder} />}
         {<h1 className="text-lg font-semibold">{pageTitle}</h1>}
@@ -40,15 +40,6 @@ function BreadCrumbs({ folder }) {
     <div className="flex items-center gap-1">
       <BreadCrumbItem path={root.path} name={root.name} />
       <RiArrowRightSLine className="h-4 w-4" />
-      {/* {parentFolder && (
-        <>
-          <BreadCrumbItem
-            path={`/folder/${parentFolder.id}`}
-            name={parentFolder.name}
-          />
-          <RiArrowRightSLine className="h-4 w-4" />
-        </>
-      )} */}
       {parentFolders.lenght !== 0 &&
         parentFolders.map((folder, index) => (
           <>

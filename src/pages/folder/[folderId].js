@@ -18,7 +18,7 @@ export default function FolderPage() {
           candisableitem="true"
           className={`flex ${!isItemViewerVisible && 'lg:pr-[62px]'}`}
         >
-          <div className="flex flex-auto flex-col gap-9 px-3.5 py-5">
+          <div className="flex flex-auto flex-col gap-9 px-4 py-5 lg:px-8">
             <PageEmpty />
             <section className=" ">
               <PageFolders />
