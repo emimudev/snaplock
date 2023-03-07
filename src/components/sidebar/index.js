@@ -40,9 +40,9 @@ export default function Sidebar() {
             Storage
           </div>
           <div>
-            <div className="relative h-2 rounded-full bg-slate-400/60">
+            <div className="relative h-2 overflow-hidden rounded-full bg-slate-400/60">
               <div
-                className="absolute left-0 top-0 h-2 rounded-full bg-green-500"
+                className="absolute left-0 top-0 h-2 overflow-hidden rounded-full bg-green-500"
                 style={{
                   width: `${
                     storage

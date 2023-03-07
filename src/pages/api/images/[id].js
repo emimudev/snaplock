@@ -1,5 +1,6 @@
 import { getImage } from '@/api-utils/images'
 import dbConnect from '@/lib/dbConnnect'
+import ImageModel from '@/models/ImageModel'
 
 export default async function handler(req, res) {
   const {
@@ -15,7 +16,18 @@ export default async function handler(req, res) {
       break
 
     case 'PUT':
-      res.status(400).json({ success: false })
+      try {
+        const modifiedImage = await ImageModel.findByIdAndUpdate(id, req.body, {
+          new: true,
+          runValidators: true
+        })
+        if (!modifiedImage) {
+          return res.status(400).json({ success: false })
+        }
+        res.status(200).json(modifiedImage)
+      } catch (error) {
+        res.status(400).json({ success: false })
+      }
       break
 
     case 'DELETE':

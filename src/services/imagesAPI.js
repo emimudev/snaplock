@@ -52,6 +52,16 @@ const imagesAPI = {
   },
   getStorage() {
     return axios.get(`${BASE_URL}/storage`).then((response) => response.data)
+  },
+  restoreImage(image) {
+    return axios
+      .put(`${IMAGES_API_URL}/${image.id}`, image)
+      .then((response) => response.data)
+  },
+  removeForever(image) {
+    return axios
+      .delete(`${BASE_URL}/bin/images/${image.id}`)
+      .then((response) => response.data)
   }
 }
 

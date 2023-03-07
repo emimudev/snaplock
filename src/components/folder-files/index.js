@@ -6,18 +6,26 @@ import { CLOUD_NAME, IMAGES_API_URL } from '@/services/imagesAPI'
 import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { HiOutlineStar } from 'react-icons/hi'
-import { MdDriveFileRenameOutline } from 'react-icons/md'
+import { MdRestore } from 'react-icons/md'
 import { RiDeleteBin7Line, RiInformationLine } from 'react-icons/ri'
 import { RxShare1 } from 'react-icons/rx'
+import { useSWRConfig } from 'swr'
 import useSWRMutation from 'swr/mutation'
 import ContextMenu from '../context-menu'
 
 const fetcher = (url, { arg: image }) => services.images.deleteImage(image)
+const fetcherRestore = (url, { arg: image }) => {
+  return services.images.restoreImage(image)
+}
+const fetcherRemoveForever = (url, { arg: image }) => {
+  return services.images.removeForever(image)
+}
 
 function useFile(image) {
   const { folder, rootDir } = useLayoutContext()
   const { id } = image
   const { activeItem, setActiveItem, showItemViewer } = useMainPageContext()
+  const { mutate } = useSWRConfig()
   const {
     trigger,
     isMutating: loadingDelete,
@@ -27,6 +35,34 @@ function useFile(image) {
     fetcher
   )
   const isActive = activeItem?.item?.id === id
+
+  const { trigger: triggerRestore } = useSWRMutation(
+    `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`,
+    fetcherRestore
+  )
+
+  const { trigger: deleteForever } = useSWRMutation(
+    `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`,
+    fetcherRemoveForever
+  )
+
+  const restoreImage = () => {
+    toast.promise(
+      triggerRestore({ ...image, isDeleted: false })
+        .then(() => {
+          setActiveItem(null)
+        })
+        .catch((err) => {
+          console.log(err)
+        }),
+      {
+        loading: 'Restoring image...',
+        success: 'Image has been restored',
+        error: 'Error restoring folder'
+      },
+      { position: 'top-center' }
+    )
+  }
 
   const onOpenMenuContext = () => {
     setActiveItem({ item: image, type: 'image' })
@@ -50,6 +86,25 @@ function useFile(image) {
     )
   }
 
+  const removeForever = () => {
+    toast.promise(
+      deleteForever(image)
+        .then(() => {
+          setActiveItem(null)
+          mutate('/api/storage')
+        })
+        .catch((err) => {
+          console.log(err)
+        }),
+      {
+        loading: 'Deleting image...',
+        success: 'Image has been deleted',
+        error: 'Error deleting image'
+      },
+      { position: 'top-center' }
+    )
+  }
+
   const viewDetails = () => {
     showItemViewer()
   }
@@ -57,11 +112,15 @@ function useFile(image) {
   return {
     isActive,
     loadingDelete,
+    globalFolder: folder,
+    rootDir,
     deleteError,
     setActiveItem,
     onOpenMenuContext,
     viewDetails,
-    removeImage
+    removeImage,
+    restoreImage,
+    removeForever
   }
 }
 
@@ -102,7 +161,16 @@ export default function FolderFiles() {
 }
 
 function ImageFile({ image, priority }) {
-  const { isActive, onOpenMenuContext, removeImage } = useFile(image)
+  const {
+    isActive,
+    onOpenMenuContext,
+    removeImage,
+    globalFolder,
+    rootDir,
+    viewDetails,
+    restoreImage,
+    removeForever
+  } = useFile(image)
   const { setActiveItem } = useMainPageContext()
   const { file } = image
   const { public_id: publicId, original_filename: originalFilename } = file
@@ -114,7 +182,15 @@ function ImageFile({ image, priority }) {
   return (
     <ContextMenu
       onOpen={onOpenMenuContext}
-      items={getContextMenuItems({ file, onRemove: removeImage })}
+      items={getContextMenuItems({
+        file,
+        onRemove: removeImage,
+        onRestore: restoreImage,
+        onRemovePermanently: removeForever,
+        globalFolder,
+        rootDir,
+        onInfo: viewDetails
+      })}
     >
       <div
         candisableitem="false"
@@ -162,44 +238,115 @@ function ImageFileSkeleton() {
 }
 
 const getContextMenuItems = ({
+  globalFolder,
+  rootDir,
   file,
   onInfo,
   onRemove,
+  onRestore,
+  onRemovePermanently,
   onShare,
   onAddToStarred
 }) => {
+  if (globalFolder || rootDir === 'files') {
+    return [
+      {
+        id: `${file.id}-info`,
+        onClick: onInfo,
+        label: 'View details',
+        icon: <RiInformationLine className="h-4 w-4" />
+      },
+      {
+        id: `${file.id}-share`,
+        onClick: onShare,
+        label: 'Share',
+        icon: <RxShare1 className="h-4 w-4" />
+      },
+      {
+        id: `${file.id}-star`,
+        onClick: onAddToStarred,
+        icon: <HiOutlineStar className="h-4 w-4" />,
+        label: 'Add to starred'
+      },
+      // {
+      //   id: `${file.id}-rename`,
+      //   onClick: () => {},
+      //   icon: <MdDriveFileRenameOutline className="h-4 w-4" />,
+      //   label: 'Rename'
+      // },
+      {
+        id: `${file.id}-remove`,
+        onClick: onRemove,
+        divider: true,
+        icon: <RiDeleteBin7Line className="h-4 w-4" />,
+        isDanger: true,
+        label: 'Remove'
+      }
+    ]
+  }
+
+  if (rootDir === 'bin') {
+    return [
+      {
+        id: `${file.id}-info`,
+        onClick: onInfo,
+        label: 'View details',
+        icon: <RiInformationLine className="h-4 w-4" />
+      },
+      {
+        id: `${file.id}-restore`,
+        onClick: onRestore,
+        icon: <MdRestore className="h-4 w-4" />,
+        label: 'Restore'
+      },
+      {
+        id: `${file.id}-remove`,
+        onClick: onRemovePermanently,
+        divider: true,
+        icon: <RiDeleteBin7Line className="h-4 w-4" />,
+        isDanger: true,
+        label: 'Remove forever'
+      }
+    ]
+  }
+
+  if (rootDir === 'starred') {
+    return [
+      {
+        id: `${file.id}-info`,
+        onClick: onInfo,
+        label: 'View details',
+        icon: <RiInformationLine className="h-4 w-4" />
+      },
+      {
+        id: `${file.id}-share`,
+        onClick: onShare,
+        label: 'Share',
+        icon: <RxShare1 className="h-4 w-4" />
+      },
+      {
+        id: `${file.id}-remove-starred`,
+        onClick: onRestore,
+        icon: <MdRestore className="h-4 w-4" />,
+        label: 'Remove from starred'
+      },
+      {
+        id: `${file.id}-remove`,
+        onClick: onRemove,
+        divider: true,
+        icon: <RiDeleteBin7Line className="h-4 w-4" />,
+        isDanger: true,
+        label: 'Remove'
+      }
+    ]
+  }
+
   return [
     {
       id: `${file.id}-info`,
       onClick: onInfo,
       label: 'View details',
       icon: <RiInformationLine className="h-4 w-4" />
-    },
-    {
-      id: `${file.id}-share`,
-      onClick: () => {},
-      label: 'Share',
-      icon: <RxShare1 className="h-4 w-4" />
-    },
-    {
-      id: `${file.id}-star`,
-      onClick: () => {},
-      icon: <HiOutlineStar className="h-4 w-4" />,
-      label: 'Add to starred'
-    },
-    {
-      id: `${file.id}-rename`,
-      onClick: () => {},
-      icon: <MdDriveFileRenameOutline className="h-4 w-4" />,
-      label: 'Rename'
-    },
-    {
-      id: `${file.id}-remove`,
-      onClick: onRemove,
-      divider: true,
-      icon: <RiDeleteBin7Line className="h-4 w-4" />,
-      isDanger: true,
-      label: 'Remove'
     }
   ]
 }

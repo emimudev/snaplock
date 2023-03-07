@@ -26,7 +26,7 @@ export default async function handler(req, res) {
             size += img.file.bytes
           }
         })
-        console.log({ images })
+
         res.status(200).json({ storageSize: size, user })
       } catch (error) {
         console.log({ error })

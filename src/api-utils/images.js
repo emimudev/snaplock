@@ -14,6 +14,10 @@ export async function getImages(conditions) {
   return ImageModel.find(conditions).populate(DEFAULT_POPULATE_OPTIONS)
 }
 
+export async function removeImage({ id }) {
+  return ImageModel.findByIdAndUpdate(id, { isForeverDeleted: true })
+}
+
 const DEFAULT_POPULATE_OPTIONS = [
   {
     path: 'folder',

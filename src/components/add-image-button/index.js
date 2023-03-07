@@ -32,7 +32,8 @@ export default function AddImageButton({ children, ...props }) {
         success: 'Uploaded successfully',
         error:
           'Something went wrong. Remember that you can only upload 10MB per image'
-      }
+      },
+      { position: 'top-center' }
     )
   }
 
