@@ -49,7 +49,7 @@ function UserPopover({ children }) {
           <hr className="border-3 mt-4 border-slate-100 dark:border-zinc-600" />
           <div className="text-sm">
             <ul className="flex flex-col">
-              <UserPopoverItem icon={RiSettings3Line} to="/settings">
+              <UserPopoverItem icon={RiSettings3Line} to="/#">
                 Settings
               </UserPopoverItem>
               <ChangeThemeItem />
