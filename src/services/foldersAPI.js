@@ -48,9 +48,16 @@ const foldersAPI = {
       .get(`${BASE_URL}/bin/folders`)
       .then((response) => response.data)
   },
-  removeForever({ id }) {
+  removeForever(folder) {
+    // const URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image/upload`
+    // const formData = new FormData()
+    // formData.append('upload_preset', UPPLOAD_PRESET)
+    // formData.append('cloud_name', CLOUD_NAME)
+    // formData.append('public_ids', [])
+    // formData.append('prefix', `snaplock/${folder.id}`)
+    // formData.append('all', true)
     return axios
-      .delete(`${BASE_URL}/bin/folders/${id}`)
+      .delete(`${BASE_URL}/bin/folders/${folder.id}`)
       .then((response) => response.data)
   },
   starredFolder({ folder }) {

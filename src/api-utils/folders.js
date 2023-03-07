@@ -19,6 +19,10 @@ export async function getFolders(conditions) {
   return FolderModel.find({ ...conditions }).populate(DEFAULT_POPULATE_OPTIONS)
 }
 
+export async function removeFolder({ id }) {
+  return FolderModel.findByIdAndUpdate(id, { isForeverDeleted: true })
+}
+
 const DEFAULT_POPULATE_OPTIONS = [
   {
     path: 'owner',

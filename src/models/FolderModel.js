@@ -71,6 +71,10 @@ const FolderSchema = new mongoose.Schema({
   isDeleted: {
     type: Boolean,
     default: false
+  },
+  isForeverDeleted: {
+    type: Boolean,
+    default: false
   }
 })
 

@@ -1,7 +1,7 @@
-import { getFolders } from '@/api-utils/folders'
+import { removeFolder } from '@/api-utils/folders'
 import dbConnect from '@/lib/dbConnnect'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]'
+import { authOptions } from '../../auth/[...nextauth]'
 
 export default async function handler(req, res) {
   const { method } = req
@@ -9,19 +9,18 @@ export default async function handler(req, res) {
   if (!session) {
     return res.status(401).json({ success: false })
   }
-  const { user } = session
 
   await dbConnect()
 
   switch (method) {
-    case 'GET':
+    case 'DELETE':
       try {
-        const folders = await getFolders({
-          owner: user.id,
-          isDeleted: true,
-          isForeverDeleted: false
-        })
-        res.status(200).json(folders)
+        const { id } = req.query
+        const folder = await removeFolder({ id })
+        if (!folder) {
+          return res.status(400).json({ success: false })
+        }
+        res.status(200).json(folder)
       } catch (error) {
         console.log({ error })
         res.status(400).json({ success: false })
