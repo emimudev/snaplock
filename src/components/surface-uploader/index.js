@@ -44,7 +44,9 @@ export default function SurfaceUploader({ children }) {
   return (
     <div
       {...getRootProps()}
-      className={`min-h-full ${isDragAccept && 'bg-green-50'}`}
+      className={`min-h-full ${
+        isDragAccept && 'bg-green-50 dark:bg-emerald-400/10'
+      }`}
     >
       <Toaster position="bottom-right" />
       <input {...getInputProps()} />

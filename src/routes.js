@@ -2,16 +2,16 @@ import { BsFiles } from 'react-icons/bs'
 import { HiOutlineStar } from 'react-icons/hi'
 import {
   RiBubbleChartLine,
-  RiDashboardLine,
+  // RiDashboardLine,
   RiDeleteBin7Line
 } from 'react-icons/ri'
 
 export const SIDEBAR_ROUTES = [
-  {
-    name: 'Overview',
-    icon: RiDashboardLine,
-    path: '/overview'
-  },
+  // {
+  //   name: 'Overview',
+  //   icon: RiDashboardLine,
+  //   path: '/overview'
+  // },
   {
     name: 'Files',
     icon: BsFiles,

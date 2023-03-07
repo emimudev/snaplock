@@ -1,6 +1,7 @@
 import { useMainPageContext } from '@/context/mainPageContext'
 import { FaCommentAlt } from 'react-icons/fa'
 import FolderViewer from '../folder-viewer'
+import ImageViewer from './image'
 
 export default function AsideItemViewer() {
   const { activeItem, isItemViewerVisible } = useMainPageContext()
@@ -12,6 +13,7 @@ export default function AsideItemViewer() {
     >
       {!activeItem && <EmptyItem />}
       {activeItem?.type === 'folder' && <FolderViewer />}
+      {activeItem?.type === 'image' && <ImageViewer />}
     </div>
   )
 }

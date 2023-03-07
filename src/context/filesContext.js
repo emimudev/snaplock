@@ -1,4 +1,5 @@
 import services from '@/services'
+import { IMAGES_API_URL } from '@/services/imagesAPI'
 import { createContext, useContext } from 'react'
 import useSWR from 'swr'
 import { useLayoutContext } from './layoutContext'
@@ -7,11 +8,14 @@ const fetcher = () => services.folders.getFolders()
 const fetcherSubFolders = ({ parentFolderId }) => {
   return () => services.folders.getSubFolders({ parentFolderId })
 }
+const fetcherFiles = ({ folder }) => {
+  return async () => services.images.getImages({ folderId: folder?.id })
+}
 
 const FilesContext = createContext()
 
 export default function FilesContextProvider({ children }) {
-  const { urlFolderContext, folder } = useLayoutContext()
+  const { urlFolderContext, folder, rootDir } = useLayoutContext()
 
   const {
     data: folders,
@@ -22,8 +26,26 @@ export default function FilesContextProvider({ children }) {
     folder ? fetcherSubFolders({ parentFolderId: folder.id }) : fetcher
   )
 
+  const {
+    data: files,
+    isLoading: filesLoading,
+    error: errorFiles
+  } = useSWR(
+    `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`,
+    fetcherFiles({ folder })
+  )
+
   return (
-    <FilesContext.Provider value={{ folders, foldersError, foldersLoading }}>
+    <FilesContext.Provider
+      value={{
+        folders,
+        foldersError,
+        foldersLoading,
+        files,
+        filesLoading,
+        errorFiles
+      }}
+    >
       {children}
     </FilesContext.Provider>
   )

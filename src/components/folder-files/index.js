@@ -1,37 +1,41 @@
-import { useLayoutContext } from '@/context/layoutContext'
+import { useFilesContext } from '@/context/filesContext'
 import { useMainPageContext } from '@/context/mainPageContext'
-import services from '@/services'
-import { CLOUD_NAME, IMAGES_API_URL } from '@/services/imagesAPI'
+import { CLOUD_NAME } from '@/services/imagesAPI'
 import Image from 'next/image'
-import useSWR from 'swr'
-
-const fetcher = ({ folder }) => {
-  return async () => services.images.getImages({ folderId: folder?.id })
-}
 
 export default function FolderFiles() {
-  const { folder, rootDir } = useLayoutContext()
-  const { data, isLoading } = useSWR(
-    `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`,
-    fetcher({ folder })
-  )
+  const { filesLoading, foldersLoading, files } = useFilesContext()
 
-  if (isLoading) {
+  if (filesLoading || foldersLoading) {
     return (
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-x-4 gap-y-3 md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]">
-        {new Array(3).fill(0).map((_, index) => (
-          <ImageFileSkeleton key={index} />
-        ))}
-      </div>
+      <>
+        <div className="mb-3 flex items-center justify-between">
+          <span className="">Files</span>
+        </div>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-x-4 gap-y-3 md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]">
+          {new Array(3).fill(0).map((_, index) => (
+            <ImageFileSkeleton key={index} />
+          ))}
+        </div>
+      </>
     )
   }
 
+  if (files?.length === 0) {
+    return null
+  }
+
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-x-4 gap-y-3 md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]">
-      {data?.map((image, index) => (
-        <ImageFile priority={index <= 8} key={image.id} image={image} />
-      ))}
-    </div>
+    <section>
+      <div className="mb-3 flex items-center justify-between">
+        <span className="">Files</span>
+      </div>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-x-4 gap-y-3 md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]">
+        {files?.map((image, index) => (
+          <ImageFile priority={index <= 8} key={image.id} image={image} />
+        ))}
+      </div>
+    </section>
   )
 }
 

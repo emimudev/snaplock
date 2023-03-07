@@ -10,7 +10,7 @@ export default async function middleware(req) {
   const session = await getToken({ req, secret: NEXTAUTH_SECRET, raw: true })
 
   if (session && req.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/overview', req.url))
+    return NextResponse.redirect(new URL('/files', req.url))
   }
 
   if (!session && req.nextUrl.pathname !== '/') {
