@@ -4,7 +4,7 @@ import services from '@/services'
 import { IMAGES_API_URL } from '@/services/imagesAPI'
 import { FILE_MEASURES } from '@/utils-browser'
 import { useDropzone } from 'react-dropzone'
-import { toast, Toaster } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import useSWRMutation from 'swr/mutation'
 
 const fetcher = (url, { arg: { folder, images, userId } }) => {
@@ -48,7 +48,6 @@ export default function SurfaceUploader({ children }) {
         isDragAccept && 'bg-green-50 dark:bg-emerald-400/10'
       }`}
     >
-      <Toaster position="bottom-right" />
       <input {...getInputProps()} />
       {children}
     </div>

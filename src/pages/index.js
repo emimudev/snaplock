@@ -1,4 +1,4 @@
-import { Button } from '@/components'
+import { Button, ToggleTheme } from '@/components'
 import { BrandHorizontal } from '@/components/icons'
 import { signIn } from 'next-auth/react'
 import Head from 'next/head'
@@ -17,18 +17,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="absolute inset-0 z-10 flex flex-col overflow-x-hidden overflow-y-scroll ">
-        <div className="flex h-full flex-1 items-center justify-center bg-white">
+        <div className="flex h-full flex-1 items-center justify-center bg-white dark:bg-zinc-900">
           <div className="flex flex-col">
-            <div className="absolute top-0 right-0 left-0 flex h-[70px] w-full items-center justify-between bg-white px-5 md:px-[10%]">
+            <div className="absolute top-0 right-0 left-0 flex h-[70px] w-full items-center justify-between bg-white px-5 dark:bg-zinc-900 md:px-[10%]">
               <div className="w-full max-w-[180px]">
-                <BrandHorizontal className="text-slate-600" />
+                <BrandHorizontal className="text-slate-600 dark:text-slate-200" />
               </div>
-              <a target="_blank" href="https://github.com/emimudev/snaplock">
-                <Button as="span" flat>
-                  <BsGithub className="h-6 w-6" />
-                  <span>emimudev</span>
-                </Button>
-              </a>
+              <div className="flex items-center gap-4">
+                <ToggleTheme type="button" />
+                <a target="_blank" href="https://github.com/emimudev/snaplock">
+                  <Button as="span" flat>
+                    <BsGithub className="h-6 w-6" />
+                    <span>emimudev</span>
+                  </Button>
+                </a>
+              </div>
             </div>
             <div className="flex flex-col px-8">
               <div className="relative bottom-0 mt-7 max-w-3xl text-4xl font-semibold after:absolute after:h-3 after:w-3 after:bg-red-400 after:shadow-2xl lg:text-6xl">

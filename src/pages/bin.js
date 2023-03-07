@@ -1,21 +1,36 @@
-import { Layout } from '@/components'
+import { Layout, PageFolders } from '@/components'
+import FolderFiles from '@/components/folder-files'
+import PageEmpty from '@/components/PageEmpty'
+import FilesContextProvider from '@/context/filesContext'
+import { useMainPageContext } from '@/context/mainPageContext'
 
 export default function BinPage() {
-  return <h1>Papelera</h1>
+  const { isItemViewerVisible } = useMainPageContext()
+
+  return (
+    <FilesContextProvider>
+      <div
+        candisableitem="true"
+        className={`flex ${!isItemViewerVisible && 'lg:pr-[62px]'}`}
+      >
+        <div className="flex flex-auto flex-col gap-9 px-4 py-5 lg:px-8">
+          <PageEmpty />
+          <section className=" ">
+            <PageFolders />
+          </section>
+          <section className=" ">
+            <FolderFiles />
+          </section>
+        </div>
+      </div>
+    </FilesContextProvider>
+  )
 }
 
 BinPage.getLayout = function getLayout({ page, props }) {
   return (
-    <Layout rootDir="bin" {...props}>
+    <Layout rootDir="bin" mainBarProps={{ title: 'Recycle bin' }} {...props}>
       {page}
     </Layout>
   )
 }
-
-// export async function getServerSideProps({ req, res }) {
-//   return {
-//     props: {
-//       session: await getServerSession(req, res, authOptions)
-//     }
-//   }
-// }

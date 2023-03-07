@@ -16,6 +16,9 @@ const imagesAPI = {
       .get(`${IMAGES_API_URL}/${id}`)
       .then((response) => response.data)
   },
+  getDeletedImages() {
+    return axios.get(`${BASE_URL}/bin/images`).then((response) => response.data)
+  },
   async createImages({ folder, images, userId }) {
     const URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
     const formData = new FormData()

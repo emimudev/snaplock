@@ -4,18 +4,31 @@ import { createContext, useContext } from 'react'
 import useSWR from 'swr'
 import { useLayoutContext } from './layoutContext'
 
-const fetcher = () => services.folders.getFolders()
+const fetcherFolders = () => services.folders.getFolders()
 const fetcherSubFolders = ({ parentFolderId }) => {
   return () => services.folders.getSubFolders({ parentFolderId })
 }
+const fetcherDeltedFolders = () => services.folders.getDeletedFolders()
+
 const fetcherFiles = ({ folder }) => {
   return async () => services.images.getImages({ folderId: folder?.id })
 }
+const fetcherDeletedFiles = () => services.images.getDeletedImages()
 
 const FilesContext = createContext()
 
 export default function FilesContextProvider({ children }) {
   const { urlFolderContext, folder, rootDir } = useLayoutContext()
+
+  const filesFetchers = {
+    files: fetcherFiles({ folder }),
+    bin: fetcherDeletedFiles
+  }
+
+  const foldersFetchers = {
+    files: fetcherFolders,
+    bin: fetcherDeltedFolders
+  }
 
   const {
     data: folders,
@@ -23,7 +36,9 @@ export default function FilesContextProvider({ children }) {
     isLoading: foldersLoading
   } = useSWR(
     urlFolderContext,
-    folder ? fetcherSubFolders({ parentFolderId: folder.id }) : fetcher
+    folder
+      ? fetcherSubFolders({ parentFolderId: folder.id })
+      : foldersFetchers[rootDir]
   )
 
   const {
@@ -32,7 +47,7 @@ export default function FilesContextProvider({ children }) {
     error: errorFiles
   } = useSWR(
     `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`,
-    fetcherFiles({ folder })
+    folder ? fetcherFiles({ folder }) : filesFetchers[rootDir]
   )
 
   return (

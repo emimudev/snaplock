@@ -50,6 +50,7 @@ export default async function handler(req, res) {
 
     case 'DELETE':
       try {
+        console.log({ id })
         const folderToDelete = await getFolderById({ folderId: id })
         folderToDelete.isDeleted = true
         await folderToDelete.save()

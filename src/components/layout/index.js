@@ -2,6 +2,7 @@ import { Navbar, Sidebar } from '@/components'
 import LayoutContextProvider from '@/context/layoutContext'
 import MainPageContextProvider from '@/context/mainPageContext'
 import useUser from '@/hooks/useUser'
+import { Toaster } from 'react-hot-toast'
 import AsideItemViewer from '../aside-item-viewer'
 import MainBarPage from '../main-bar-page'
 
@@ -37,6 +38,7 @@ export default function Layout({
           </div>
         </div>
       </div>
+      <Toaster position="bottom-right" />
     </LayoutContextProvider>
   )
 }

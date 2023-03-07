@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
 import { HiOutlineStar } from 'react-icons/hi'
 import { ImSpinner } from 'react-icons/im'
-import { MdDriveFileRenameOutline } from 'react-icons/md'
+import { MdDriveFileRenameOutline, MdRestore } from 'react-icons/md'
 import {
   RiDeleteBin7Line,
   RiFolderFill,
@@ -16,9 +16,15 @@ import useSWRMutation from 'swr/mutation'
 import ContextMenu from '../context-menu'
 
 const fetcher = (url, { arg: folder }) => services.folders.deleteFolder(folder)
+const fetcherRestore = (url, { arg: folder }) => {
+  return services.folders.restoreFolder(folder)
+}
+const fetcherRemoveForever = (url, { arg: folder }) => {
+  return services.folders.removeForever(folder)
+}
 
 function useFolder(folder) {
-  const { urlFolderContext } = useLayoutContext()
+  const { urlFolderContext, folder: globalFolder, rootDir } = useLayoutContext()
   const { id } = folder
   const { activeItem, setActiveItem, showItemViewer } = useMainPageContext()
   const router = useRouter()
@@ -27,6 +33,17 @@ function useFolder(folder) {
     isMutating: loadingDelete,
     error: deleteError
   } = useSWRMutation(urlFolderContext, fetcher)
+
+  const { trigger: triggerRestore } = useSWRMutation(
+    urlFolderContext,
+    fetcherRestore
+  )
+
+  const { trigger: deleteForever } = useSWRMutation(
+    urlFolderContext,
+    fetcherRemoveForever
+  )
+
   const isActive = activeItem?.item?.id === id
 
   const handleFolderClick = (e) => {
@@ -66,15 +83,55 @@ function useFolder(folder) {
     showItemViewer()
   }
 
+  const restoreFolder = () => {
+    toast.promise(
+      triggerRestore({ ...folder, isDeleted: false })
+        .then(() => {
+          setActiveItem(null)
+        })
+        .catch((err) => {
+          console.log(err)
+        }),
+      {
+        loading: 'Restoring folder...',
+        success: 'Folder has been restored',
+        error: 'Error restoring folder'
+      },
+      { position: 'top-center' }
+    )
+  }
+
+  const removeForever = () => {
+    toast.promise(
+      deleteForever(folder)
+        .then(() => {
+          setActiveItem(null)
+        })
+        .catch((err) => {
+          console.log(err)
+        }),
+      {
+        loading: 'Deleting folder...',
+        success: 'Folder has been deleted',
+        error: 'Error deleting folder'
+      },
+      { position: 'top-center' }
+    )
+  }
+
   return {
     isActive,
     loadingDelete,
     deleteError,
+    globalFolder,
+    rootDir,
     setActiveItem,
     handleFolderClick,
     onOpenMenuContext,
+    removeForever,
     viewDetails,
-    removeFolder
+    removeFolder,
+    restoreFolder
   }
 }
 
@@ -85,14 +142,22 @@ export default function Folder(folder) {
     onOpenMenuContext,
     removeFolder,
     viewDetails,
-    loadingDelete
+    restoreFolder,
+    removeForever,
+    loadingDelete,
+    globalFolder,
+    rootDir
   } = useFolder(folder)
   const { name } = folder
 
   const contextMenuItems = getContextMenuItems({
+    globalFolder,
+    rootDir,
     folder,
     onRemove: removeFolder,
-    onInfo: viewDetails
+    onInfo: viewDetails,
+    onRestore: restoreFolder,
+    onRemovePermanently: removeForever
   })
 
   return (
@@ -139,44 +204,85 @@ Folder.Skeleton = function FolderSkeleton() {
 }
 
 const getContextMenuItems = ({
+  globalFolder,
+  rootDir,
   folder,
   onInfo,
   onRemove,
+  onRestore,
+  onRemovePermanently,
   onShare,
   onAddToStarred
 }) => {
+  console.log({ globalFolder, rootDir })
+  if (globalFolder || rootDir === 'files') {
+    return [
+      {
+        id: `${folder.id}-info`,
+        onClick: onInfo,
+        label: 'View details',
+        icon: <RiInformationLine className="h-4 w-4" />
+      },
+      {
+        id: `${folder.id}-share`,
+        onClick: () => {},
+        label: 'Share',
+        icon: <RxShare1 className="h-4 w-4" />
+      },
+      {
+        id: `${folder.id}-star`,
+        onClick: () => {},
+        icon: <HiOutlineStar className="h-4 w-4" />,
+        label: 'Add to starred'
+      },
+      {
+        id: `${folder.id}-rename`,
+        onClick: () => {},
+        icon: <MdDriveFileRenameOutline className="h-4 w-4" />,
+        label: 'Rename'
+      },
+      {
+        id: `${folder.id}-remove`,
+        onClick: onRemove,
+        divider: true,
+        icon: <RiDeleteBin7Line className="h-4 w-4" />,
+        isDanger: true,
+        label: 'Remove'
+      }
+    ]
+  }
+
+  if (rootDir === 'bin') {
+    return [
+      {
+        id: `${folder.id}-info`,
+        onClick: onInfo,
+        label: 'View details',
+        icon: <RiInformationLine className="h-4 w-4" />
+      },
+      {
+        id: `${folder.id}-restore`,
+        onClick: onRestore,
+        icon: <MdRestore className="h-4 w-4" />,
+        label: 'Restore'
+      },
+      {
+        id: `${folder.id}-remove`,
+        onClick: onRemovePermanently,
+        divider: true,
+        icon: <RiDeleteBin7Line className="h-4 w-4" />,
+        isDanger: true,
+        label: 'Remove forever'
+      }
+    ]
+  }
+
   return [
     {
       id: `${folder.id}-info`,
       onClick: onInfo,
       label: 'View details',
       icon: <RiInformationLine className="h-4 w-4" />
-    },
-    {
-      id: `${folder.id}-share`,
-      onClick: () => {},
-      label: 'Share',
-      icon: <RxShare1 className="h-4 w-4" />
-    },
-    {
-      id: `${folder.id}-star`,
-      onClick: () => {},
-      icon: <HiOutlineStar className="h-4 w-4" />,
-      label: 'Add to starred'
-    },
-    {
-      id: `${folder.id}-rename`,
-      onClick: () => {},
-      icon: <MdDriveFileRenameOutline className="h-4 w-4" />,
-      label: 'Rename'
-    },
-    {
-      id: `${folder.id}-remove`,
-      onClick: onRemove,
-      divider: true,
-      icon: <RiDeleteBin7Line className="h-4 w-4" />,
-      isDanger: true,
-      label: 'Remove'
     }
   ]
 }

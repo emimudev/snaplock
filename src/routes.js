@@ -18,7 +18,7 @@ export const SIDEBAR_ROUTES = [
     path: '/files'
   },
   {
-    name: 'Shared',
+    name: 'Shared with me',
     icon: RiBubbleChartLine,
     path: '/shared'
   },
