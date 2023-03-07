@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react'
 
 const LayoutContext = createContext()
 
-export default function LayoutContextProvider({ folder, children }) {
+export default function LayoutContextProvider({ folder, rootDir, children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const urlFolderContext = folder
     ? `${SUBFOLDERS_API_URL}/${folder.id}`
@@ -18,6 +18,7 @@ export default function LayoutContextProvider({ folder, children }) {
         folder,
         isSidebarOpen,
         urlFolderContext,
+        rootDir,
         toggleSidebar,
         closeSidebar,
         openSidebar
@@ -34,6 +35,7 @@ export default function LayoutContextProvider({ folder, children }) {
  * @property {Object} folder - The current folder
  * @property {boolean} isSidebarOpen - Whether the sidebar is open or not
  * @property {String} urlFolderContext - The url to do actions to the currentFolder
+ * @property {String|undefined} rootDir - The url to do actions to the currentFolder
  * @property {() => void} toggleSidebar - Toggle the sidebar open/closed
  * @property {() => void} closeSidebar - Close the sidebar
  * @property {() => void} openSidebar - Open the sidebar

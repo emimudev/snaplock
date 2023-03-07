@@ -5,7 +5,11 @@ export default function SharedPage() {
 }
 
 SharedPage.getLayout = function getLayout({ page, props }) {
-  return <Layout {...props}>{page}</Layout>
+  return (
+    <Layout rootDir="shared" {...props}>
+      {page}
+    </Layout>
+  )
 }
 
 // SharedPage.getInitialProps = async ({ req, res }) => {

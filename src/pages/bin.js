@@ -5,7 +5,11 @@ export default function BinPage() {
 }
 
 BinPage.getLayout = function getLayout({ page, props }) {
-  return <Layout {...props}>{page}</Layout>
+  return (
+    <Layout rootDir="bin" {...props}>
+      {page}
+    </Layout>
+  )
 }
 
 // export async function getServerSideProps({ req, res }) {

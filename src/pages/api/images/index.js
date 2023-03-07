@@ -3,14 +3,6 @@ import dbConnect from '@/lib/dbConnnect'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]'
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '3mb'
-    }
-  }
-}
-
 export default async function handler(req, res) {
   const { method } = req
   const session = await getServerSession(req, res, authOptions)
@@ -24,10 +16,12 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
+        const { folderId } = req.query
+        console.log({ folderId })
         const images = await getImages({
           owner: user.id,
           isDeleted: false,
-          folder: null
+          folder: folderId || null
         })
         res.status(200).json(images)
       } catch (error) {

@@ -12,10 +12,10 @@ const fetcher = (url, { arg: { folder, images, userId } }) => {
 }
 
 export default function SurfaceUploader({ children }) {
-  const { folder } = useLayoutContext()
+  const { folder, rootDir } = useLayoutContext()
   const { user } = useUser()
-  const URL = folder ? `${IMAGES_API_URL}/${folder.id}` : IMAGES_API_URL
-  const { trigger } = useSWRMutation(URL, fetcher)
+  const URL_KEY = `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`
+  const { trigger } = useSWRMutation(URL_KEY, fetcher)
   const { getRootProps, getInputProps, isDragAccept } = useDropzone({
     noClick: true,
     noKeyboard: true,
@@ -25,7 +25,7 @@ export default function SurfaceUploader({ children }) {
     onDropAccepted: (acceptedFiles) => {
       toast.promise(
         trigger({ folder, images: acceptedFiles, userId: user.id })
-          .then((info) => console.log({ info }))
+          .then((info) => {})
           .catch((error) => console.log({ error })),
         {
           loading: 'Uploading images...',

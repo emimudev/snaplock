@@ -2,13 +2,13 @@ import axios from 'axios'
 import { BASE_URL } from './config'
 
 export const IMAGES_API_URL = `${BASE_URL}/images`
-const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME
-const UPPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET
+export const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME
+export const UPPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET
 
 const imagesAPI = {
   getImages({ folderId }) {
     return axios
-      .get(`${IMAGES_API_URL}/${folderId}`)
+      .get(`${IMAGES_API_URL}${folderId ? `?folderId=${folderId}` : ''}`)
       .then((response) => response.data)
   },
   getImage({ id }) {

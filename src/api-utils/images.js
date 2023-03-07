@@ -11,7 +11,7 @@ export async function getImage({ imageId }) {
 }
 
 export async function getImages(conditions) {
-  return ImageModel.findOne(conditions).populate(DEFAULT_POPULATE_OPTIONS)
+  return ImageModel.find(conditions).populate(DEFAULT_POPULATE_OPTIONS)
 }
 
 const DEFAULT_POPULATE_OPTIONS = [

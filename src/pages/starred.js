@@ -5,7 +5,11 @@ export default function StarredPage() {
 }
 
 StarredPage.getLayout = function getLayout({ page, props }) {
-  return <Layout {...props}>{page}</Layout>
+  return (
+    <Layout rootDir="starred" {...props}>
+      {page}
+    </Layout>
+  )
 }
 
 // export async function getServerSideProps({ req, res }) {

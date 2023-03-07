@@ -18,7 +18,7 @@ export default function PageFolders() {
 function Skeleton() {
   return (
     <>
-      {new Array(10).fill(0).map((_, index) => (
+      {new Array(4).fill(0).map((_, index) => (
         <Folder.Skeleton key={index} />
       ))}
     </>

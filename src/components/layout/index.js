@@ -7,13 +7,14 @@ import MainBarPage from '../main-bar-page'
 
 export default function Layout({
   folder,
+  rootDir,
   showMainBar = true,
   children,
   mainBarProps
 }) {
   const { user } = useUser()
   return (
-    <LayoutContextProvider folder={folder}>
+    <LayoutContextProvider folder={folder} rootDir={rootDir}>
       <div className="relative flex h-screen w-screen dark:bg-zinc-800">
         <Sidebar />
         <div className="relative flex flex-1 flex-col transition-all lg:pl-[256px]">
