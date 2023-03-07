@@ -1,6 +1,7 @@
 import { getAndUpdateFolder } from '@/api-utils/folders'
 import { Layout, PageFolders } from '@/components'
 import AddFolderButton from '@/components/add-folder-button'
+import AddImageButton from '@/components/add-image-button'
 import FolderFiles from '@/components/folder-files'
 import PageEmpty from '@/components/PageEmpty'
 import SurfaceUploader from '@/components/surface-uploader'
@@ -36,6 +37,7 @@ export default function FolderPage() {
 function MainActions() {
   return (
     <div className="flex items-center gap-2">
+      <AddImageButton />
       <AddFolderButton />
     </div>
   )
