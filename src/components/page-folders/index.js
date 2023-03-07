@@ -17,7 +17,11 @@ export default function PageFolders() {
     <section>
       <div className="mb-3 flex items-center justify-between">
         <span className="">Folders</span>
-        {(rootDir === 'files' || folder) && <AddFolderButton />}
+        {(rootDir === 'files' || folder) && (
+          <AddFolderButton flat size="xs" className="px-3">
+            New folder
+          </AddFolderButton>
+        )}
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-x-4 gap-y-3">
         {folders?.map((folder) => (
