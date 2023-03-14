@@ -16,7 +16,7 @@ export default function PageFolders() {
   return (
     <section>
       <div className="mb-3 flex items-center justify-between">
-        <span className="">Folders</span>
+        <span>Folders</span>
         {(rootDir === 'files' || folder) && (
           <AddFolderButton flat size="xs" className="px-3">
             New folder
@@ -34,7 +34,7 @@ export default function PageFolders() {
 
 function Skeleton() {
   return (
-    <>
+    <section>
       <div className="mb-3 flex items-center justify-between">
         <span className="">Folders</span>
       </div>
@@ -43,6 +43,6 @@ function Skeleton() {
           <Folder.Skeleton key={index} />
         ))}
       </div>
-    </>
+    </section>
   )
 }

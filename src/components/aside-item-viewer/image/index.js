@@ -8,7 +8,7 @@ import { BiWorld } from 'react-icons/bi'
 import { RiFolderLockFill } from 'react-icons/ri'
 
 export default function ImageViewer() {
-  const { activeItem } = useMainPageContext()
+  const { activeItem, showImageViewer } = useMainPageContext()
   if (activeItem && activeItem?.type !== 'image') return null
   const { item: image } = activeItem
   const { file } = image
@@ -23,7 +23,10 @@ export default function ImageViewer() {
         </h2>
       </div>
       <div className="flex flex-col border-b border-zinc-300 p-5  dark:border-white/10">
-        <div className="mb-6 flex items-center justify-center">
+        <div
+          className="mb-6 flex cursor-pointer items-center justify-center"
+          onClick={showImageViewer}
+        >
           <Image
             priority
             className={'h-full w-full object-cover'}

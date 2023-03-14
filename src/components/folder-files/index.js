@@ -129,7 +129,7 @@ export default function FolderFiles() {
 
   if (filesLoading || foldersLoading) {
     return (
-      <>
+      <section>
         <div className="mb-3 flex items-center justify-between">
           <span className="">Files</span>
         </div>
@@ -138,7 +138,7 @@ export default function FolderFiles() {
             <ImageFileSkeleton key={index} />
           ))}
         </div>
-      </>
+      </section>
     )
   }
 
@@ -171,12 +171,25 @@ function ImageFile({ image, priority }) {
     restoreImage,
     removeForever
   } = useFile(image)
-  const { setActiveItem } = useMainPageContext()
+  const { setActiveItem, showImageViewer } = useMainPageContext()
   const { file } = image
   const { public_id: publicId, original_filename: originalFilename } = file
 
-  const handleClick = () => {
-    setActiveItem({ item: image, type: 'image' })
+  const handleClick = (e) => {
+    switch (e.detail) {
+      case 1:
+        {
+          const isMobile = window.matchMedia(
+            'only screen and (max-width: 767px)'
+          ).matches
+          setActiveItem({ item: image, type: 'image' })
+          isMobile && showImageViewer()
+        }
+        break
+      case 2:
+        showImageViewer()
+        break
+    }
   }
 
   return (
@@ -199,7 +212,7 @@ function ImageFile({ image, priority }) {
           isActive && 'ring-[2px] ring-emerald-500 dark:bg-emerald-700'
         }`}
       >
-        <div className="group flex w-full flex-col gap-2  ">
+        <div className="group flex w-full select-none flex-col gap-2">
           <div
             className={`relative overflow-hidden bg-zinc-200 transition-colors before:block before:w-full before:pt-[56.25%] dark:bg-white/20 ${
               isActive && 'bg-emerald-400 dark:bg-emerald-600'
@@ -207,7 +220,7 @@ function ImageFile({ image, priority }) {
           >
             <Image
               priority={priority}
-              className={`pointer-events-none absolute top-0 h-full w-full object-cover transition-opacity ${
+              className={`pointer-events-none absolute top-0 h-full w-full select-none object-cover transition-opacity ${
                 isActive ? 'opacity-80' : 'group-hover:opacity-80'
               }`}
               src={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/c_limit,w_650/${publicId}.webp`}

@@ -5,8 +5,11 @@ const MainPageContext = createContext()
 export default function MainPageContextProvider({ children }) {
   const [isItemViewerVisible, setIsItemViewerVisible] = useState(true)
   const [activeItem, setActiveItem] = useState(null)
+  const [showImage, setShowImage] = useState(false)
   const toggleItemViewer = () => setIsItemViewerVisible((prev) => !prev)
   const showItemViewer = () => setIsItemViewerVisible(true)
+  const showImageViewer = () => setShowImage(true)
+  const hideImageViewer = () => setShowImage(false)
 
   useEffect(() => {
     function removeActiveFolder(evt) {
@@ -32,7 +35,10 @@ export default function MainPageContextProvider({ children }) {
         setActiveItem,
         isItemViewerVisible,
         toggleItemViewer,
-        showItemViewer
+        showItemViewer,
+        showImageViewer,
+        hideImageViewer,
+        showImage
       }}
     >
       {children}

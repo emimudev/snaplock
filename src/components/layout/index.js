@@ -4,6 +4,7 @@ import MainPageContextProvider from '@/context/mainPageContext'
 import useUser from '@/hooks/useUser'
 import { Toaster } from 'react-hot-toast'
 import AsideItemViewer from '../aside-item-viewer'
+import ImageViewer from '../image-viewer'
 import MainBarPage from '../main-bar-page'
 
 export default function Layout({
@@ -34,6 +35,7 @@ export default function Layout({
                 </div>
                 {showMainBar && <AsideItemViewer />}
               </main>
+              <ImageViewer />
             </MainPageContextProvider>
           </div>
         </div>
