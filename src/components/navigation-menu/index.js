@@ -1,3 +1,4 @@
+import { useLayoutContext } from '@/context/layoutContext'
 import { SIDEBAR_ROUTES } from '@/routes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -35,11 +36,13 @@ function NavItem({ icon, soon, children, to }) {
   const router = useRouter()
   const matchRoute = to === router.pathname
   const Icon = icon
+  const { closeSidebar } = useLayoutContext()
   return (
     <li className={NavItemStyles({ active: matchRoute })}>
       <Link
         className="flex h-full w-full items-center justify-between px-3 py-2"
         href={soon ? '#' : to}
+        onClick={closeSidebar}
       >
         <div className="flex items-center gap-3 ">
           {icon && (
