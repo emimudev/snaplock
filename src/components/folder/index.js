@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
 import { HiOutlineStar } from 'react-icons/hi'
 import { ImSpinner } from 'react-icons/im'
-import { MdDriveFileRenameOutline, MdRestore } from 'react-icons/md'
+import { MdRestore } from 'react-icons/md'
 import {
   RiDeleteBin7Line,
   RiFolderFill,
@@ -13,11 +13,12 @@ import {
 } from 'react-icons/ri'
 import { RxShare1 } from 'react-icons/rx'
 import useSWRMutation from 'swr/mutation'
+import Button from '../button'
 import ContextMenu from '../context-menu'
 
 const fetcher = (url, { arg: folder }) => services.folders.deleteFolder(folder)
 const fetcherRestore = (url, { arg: folder }) => {
-  return services.folders.restoreFolder(folder)
+  return services.folders.restoreFolder({ folderId: folder.id })
 }
 const fetcherRemoveForever = (url, { arg: folder }) => {
   return services.folders.removeForever(folder)
@@ -52,7 +53,33 @@ function useFolder(folder) {
         setActiveItem({ item: folder, type: 'folder' })
         break
       case 2:
-        router.push(`/folder/${id}`).finally(() => setActiveItem(null))
+        if (router.pathname === '/bin') {
+          const id = toast(
+            <div className="flex items-center">
+              <span className="flex-0 ml-1">
+                To view this folder, you&apos;ll need to restore it first
+              </span>
+              <Button
+                onClick={_restoreFolder}
+                flat
+                color="secondary"
+                className="flex-0 text-sm"
+              >
+                Restore
+              </Button>
+            </div>,
+            {
+              position: 'bottom-center',
+              className: 'dark:bg-zinc-700/60 dark:text-white'
+            }
+          )
+          function _restoreFolder() {
+            restoreFolder()
+            toast.dismiss(id)
+          }
+        } else {
+          router.push(`/folder/${id}`).finally(() => setActiveItem(null))
+        }
         break
     }
   }
@@ -214,7 +241,6 @@ const getContextMenuItems = ({
   onShare,
   onAddToStarred
 }) => {
-  console.log({ globalFolder, rootDir })
   if (globalFolder || rootDir === 'files') {
     return [
       {
@@ -225,21 +251,15 @@ const getContextMenuItems = ({
       },
       {
         id: `${folder.id}-share`,
-        onClick: () => {},
+        onClick: onShare,
         label: 'Share',
         icon: <RxShare1 className="h-4 w-4" />
       },
       {
         id: `${folder.id}-star`,
-        onClick: () => {},
+        onClick: onAddToStarred,
         icon: <HiOutlineStar className="h-4 w-4" />,
         label: 'Add to starred'
-      },
-      {
-        id: `${folder.id}-rename`,
-        onClick: () => {},
-        icon: <MdDriveFileRenameOutline className="h-4 w-4" />,
-        label: 'Rename'
       },
       {
         id: `${folder.id}-remove`,

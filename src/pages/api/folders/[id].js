@@ -1,4 +1,4 @@
-import { getAndUpdateFolder, getFolderById } from '@/api-utils/folders'
+import { getAndUpdateFolder } from '@/api-utils/folders'
 import dbConnect from '@/lib/dbConnnect'
 import FolderModel from '@/models/FolderModel'
 import { getServerSession } from 'next-auth'
@@ -51,14 +51,20 @@ export default async function handler(req, res) {
     case 'DELETE':
       try {
         console.log({ id })
-        const folderToDelete = await getFolderById({ folderId: id })
-        folderToDelete.isDeleted = true
-        await folderToDelete.save()
-        // const deletedFolder = await FolderModel.deleteOne({ _id: id })
+        const folderToDelete = await FolderModel.findById(id)
         if (!folderToDelete) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json(folderToDelete)
+        const result = await FolderModel.updateMany(
+          {
+            $or: [{ _id: id }, { parentFolders: { $in: [id] } }]
+          },
+          { isDeleted: true }
+        )
+        res.status(200).json({
+          folderId: folderToDelete.name,
+          result
+        })
       } catch (error) {
         res.status(400).json({ success: false })
       }

@@ -281,12 +281,6 @@ const getContextMenuItems = ({
         icon: <HiOutlineStar className="h-4 w-4" />,
         label: 'Add to starred'
       },
-      // {
-      //   id: `${file.id}-rename`,
-      //   onClick: () => {},
-      //   icon: <MdDriveFileRenameOutline className="h-4 w-4" />,
-      //   label: 'Rename'
-      // },
       {
         id: `${file.id}-remove`,
         onClick: onRemove,

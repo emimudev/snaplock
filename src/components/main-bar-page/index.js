@@ -19,7 +19,7 @@ function MainBarPage({ title, actions }) {
       </div>
       <div className="flex-0 flex  justify-end gap-2">
         <div className="flex items-center">{actions}</div>
-        <div className="flex items-center">
+        <div className="hidden items-center md:flex">
           <Button onClick={toggleItemViewer} ghost rounded onlyIcon size="sm">
             <RiInformationLine className="h-6 w-6" />
           </Button>

@@ -58,6 +58,23 @@ export async function getServerSideProps(context) {
     { _id: folderId },
     { dateOpened: Date.now() }
   )
+
+  if (
+    !folder ||
+    folder.isDeleted ||
+    folder.parentFolders.some((folder) => folder.isDeleted)
+  ) {
+    return {
+      redirect: {
+        destination: '/files',
+        props: {
+          deletedFolder: folder
+        },
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
       folder: JSON.parse(JSON.stringify(folder))

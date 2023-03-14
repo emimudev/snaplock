@@ -14,13 +14,13 @@ export default function Sidebar() {
 
   const sidebarOpen = isSidebarOpen ? 'translate-x-0' : '-translate-x-[256px]'
 
-  console.log({
-    storage,
-    max: FILE_MEASURES.MAX_STORAGE,
-    '%': `${
-      storage ? (storage?.storageSize / FILE_MEASURES.MAX_STORAGE) * 100 : 0
-    }%`
-  })
+  // console.log({
+  //   storage,
+  //   max: FILE_MEASURES.MAX_STORAGE,
+  //   '%': `${
+  //     storage ? (storage?.storageSize / FILE_MEASURES.MAX_STORAGE) * 100 : 0
+  //   }%`
+  // })
 
   return (
     <div className={'relative top-[56px] flex lg:top-0'}>

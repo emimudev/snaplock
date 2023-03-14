@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         const folders = await getFolders({
           owner: user.id,
           isDeleted: true,
-          isForeverDeleted: false
+          parentFolders: { $size: 1 }
         })
         res.status(200).json(folders)
       } catch (error) {

@@ -5,7 +5,6 @@ import Modal from '../modal'
 
 export default function ImageViewer() {
   const { activeItem, showImage, hideImageViewer } = useMainPageContext()
-  console.log({ activeItem, showImage })
   return (
     <Modal isOpen={showImage} onClose={hideImageViewer} size="image">
       {activeItem && activeItem?.type === 'image' ? (

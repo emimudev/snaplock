@@ -23,9 +23,9 @@ const foldersAPI = {
       .put(`${FOLDERS_API_URL}/${id}`, folder)
       .then((response) => response.data)
   },
-  restoreFolder(folder) {
+  restoreFolder({ folderId }) {
     return axios
-      .put(`${FOLDERS_API_URL}/${folder.id}`, folder)
+      .get(`${FOLDERS_API_URL}/restore/${folderId}`)
       .then((response) => response.data)
   },
   deleteFolder({ id }) {
