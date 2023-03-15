@@ -1,29 +1,25 @@
 import { useLayoutContext } from '@/context/layoutContext'
-import services from '@/services'
 import { fileSizeReadable, FILE_MEASURES } from '@/utils-browser'
 import { AiOutlineCloud } from 'react-icons/ai'
-import useSWR from 'swr'
 import { BrandHorizontal } from '../icons'
 import NavigationMenu from '../navigation-menu'
 
-const fetcher = (url) => services.images.getStorage()
-
 export default function Sidebar() {
-  const { isSidebarOpen, toggleSidebar } = useLayoutContext()
-  const { data: storage } = useSWR('/api/storage', fetcher)
-
+  const { isSidebarOpen, toggleSidebar, storagePercentage, storage } =
+    useLayoutContext()
   const sidebarOpen = isSidebarOpen ? 'translate-x-0' : '-translate-x-[256px]'
-
-  // console.log({
-  //   storage,
-  //   max: FILE_MEASURES.MAX_STORAGE,
-  //   '%': `${
-  //     storage ? (storage?.storageSize / FILE_MEASURES.MAX_STORAGE) * 100 : 0
-  //   }%`
-  // })
+  const getColor = () => {
+    let color = MAP_PERCENTAGE_COLORS[50]
+    Object.entries(MAP_PERCENTAGE_COLORS).forEach(([key, value]) => {
+      if (storagePercentage > key) {
+        color = value
+      }
+    })
+    return color
+  }
 
   return (
-    <div className={'relative top-[56px] flex lg:top-0'}>
+    <div className="relative top-[56px] flex lg:top-0">
       <aside
         className={`absolute left-0 z-30 flex h-[calc(100vh-56px)] w-[256px] flex-1 flex-col lg:fixed lg:h-screen ${sidebarOpen} transform-gpu overflow-y-auto border-r border-[rgba(24,24,27,.1)] bg-zinc-100 pb-2 transition-transform ease-in-out dark:bg-zinc-800 lg:max-w-[256px] lg:translate-x-0 dark:lg:border-white/10 lg:dark:bg-zinc-900`}
       >
@@ -42,13 +38,9 @@ export default function Sidebar() {
           <div>
             <div className="relative h-2 overflow-hidden rounded-full bg-slate-400/60">
               <div
-                className="absolute left-0 top-0 h-2 overflow-hidden rounded-full bg-green-500"
+                className={`absolute left-0 top-0 h-2 overflow-hidden rounded-full ${getColor()}`}
                 style={{
-                  width: `${
-                    storage
-                      ? (storage?.storageSize / FILE_MEASURES.MAX_STORAGE) * 100
-                      : 0
-                  }%`
+                  width: `${storage ? storagePercentage : 0}%`
                 }}
               />
             </div>
@@ -68,4 +60,10 @@ export default function Sidebar() {
       />
     </div>
   )
+}
+
+const MAP_PERCENTAGE_COLORS = {
+  85: 'bg-red-500',
+  70: 'bg-yellow-500',
+  50: 'bg-green-500'
 }

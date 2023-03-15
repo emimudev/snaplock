@@ -56,9 +56,7 @@ export default async function handler(req, res) {
           return res.status(400).json({ success: false })
         }
         const result = await FolderModel.updateMany(
-          {
-            $or: [{ _id: id }, { parentFolders: { $in: [id] } }]
-          },
+          { $or: [{ _id: id }, { parentFolders: { $in: [id] } }] },
           { isDeleted: true }
         )
         res.status(200).json({

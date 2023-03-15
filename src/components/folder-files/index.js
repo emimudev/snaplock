@@ -230,7 +230,7 @@ function ImageFile({ image, priority }) {
             />
             <div
               className={
-                'absolute bottom-0 left-0 right-0 z-10 flex h-9 items-center bg-black/50 px-4 text-xs text-white backdrop-blur-sm '
+                'absolute bottom-0 left-0 right-0 z-[2] flex h-9 items-center bg-black/50 px-4 text-xs text-white backdrop-blur-sm '
               }
             >
               <span className="line-clamp-1">{originalFilename}</span>

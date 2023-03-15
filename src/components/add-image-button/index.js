@@ -15,8 +15,12 @@ const fetcher = (url, { arg: { folder, images, userId } }) => {
 
 export default function AddImageButton({ children, ...props }) {
   const { user } = useUser()
-  const { folder, rootDir } = useLayoutContext()
+  const { folder, rootDir, storagePercentage, storage } = useLayoutContext()
   const URL_KEY = `${IMAGES_API_URL}/${folder ? folder.id : rootDir}`
+  const storageSize = storage?.storageSize
+  const diffSize = FILE_MEASURES.MAX_STORAGE - storageSize
+  const maxSize =
+    diffSize > FILE_MEASURES.MB * 10 ? FILE_MEASURES.MB * 10 : diffSize
   const { trigger } = useSWRMutation(URL_KEY, fetcher)
   const { mutate } = useSWRConfig()
 
@@ -43,12 +47,47 @@ export default function AddImageButton({ children, ...props }) {
         onDropAccepted={onDropAccepted}
         noDrag
         accept={{ 'image/*': [] }}
-        maxSize={FILE_MEASURES.MB * 10}
+        maxSize={maxSize}
+        disabled={storagePercentage >= 100}
+        onDropRejected={(rejectedFiles) => {
+          if (maxSize === diffSize) {
+            toast.error(
+              <div className="flex flex-col justify-start text-sm">
+                <span className="flex-0 ml-1">
+                  There is not enough space in your storage to upload this
+                  images:
+                </span>
+                <div className="mt-1 flex gap-1 overflow-hidden">
+                  {rejectedFiles.map(({ file }) => (
+                    <div
+                      key={file.path}
+                      className="rounded-full bg-zinc-100 p-1 dark:bg-zinc-600"
+                    >
+                      <span className="flex-0 ml-1 max-w-[100px] text-xs line-clamp-1 ">
+                        {file.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>,
+              {
+                position: 'bottom-center',
+                className: 'dark:bg-zinc-700/60 dark:text-white'
+              }
+            )
+          }
+        }}
       >
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <Button rounded size="auto" {...props} className="h-7 px-4 text-xs">
+            <Button
+              rounded
+              size="auto"
+              {...props}
+              className="h-7 px-4 text-xs"
+              disabled={storagePercentage >= 100}
+            >
               {children || 'Upload images'}
             </Button>
           </div>

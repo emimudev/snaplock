@@ -12,7 +12,7 @@ function MainBarPage({ title, actions }) {
 
   const pageTitle = folder ? folder?.name : title
   return (
-    <div className="flex h-full max-h-[42px] items-center justify-between border-b px-4 dark:border-white/10 lg:pl-8">
+    <div className="flex h-full max-h-[42px] items-center justify-between border-b px-4 dark:border-white/10 lg:px-8">
       <div className="flex flex-1 items-center gap-2 ">
         {<BreadCrumbs folder={folder} />}
         {<h1 className="text-lg font-semibold">{pageTitle}</h1>}

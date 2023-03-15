@@ -9,7 +9,7 @@ import UserPopover from '../user-popover'
 function Navbar({ user }) {
   const { toggleSidebar } = useLayoutContext()
   return (
-    <div className="relative flex h-[56px] w-full items-center justify-between gap-2 border-b border-[rgba(24,24,27,.1)] px-4 dark:border-white/10">
+    <div className="relative flex h-[56px] w-full items-center justify-between gap-2 border-b border-[rgba(24,24,27,.1)] px-4 dark:border-white/10 lg:px-8">
       <div className="flex items-center gap-2 lg:hidden">
         <Button
           flat
