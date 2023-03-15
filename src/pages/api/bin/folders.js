@@ -18,10 +18,15 @@ export default async function handler(req, res) {
       try {
         const folders = await getFolders({
           owner: user.id,
-          isDeleted: true,
-          parentFolders: { $size: 1 }
+          isDeleted: true
         })
-        res.status(200).json(folders)
+        const foldersFiltered = folders.filter((folder) => {
+          if (folder.parentFolders.lenght === 0) return true
+          return folder.parentFolders.every(
+            (parentFolder) => parentFolder.isDeleted === false
+          )
+        })
+        res.status(200).json(foldersFiltered)
       } catch (error) {
         console.log({ error })
         res.status(400).json({ success: false })
