@@ -15,7 +15,7 @@ export async function getImages(conditions) {
 }
 
 export async function removeImage({ id }) {
-  return ImageModel.findByIdAndUpdate(id, { isForeverDeleted: true })
+  return ImageModel.deleteOne({ _id: id })
 }
 
 const DEFAULT_POPULATE_OPTIONS = [

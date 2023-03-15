@@ -21,8 +21,7 @@ export default async function handler(req, res) {
         const folders = await getFolders({
           owner: user.id,
           parentFolder: null,
-          isDeleted: false,
-          isForeverDeleted: false
+          isDeleted: false
         })
         res.status(200).json(folders)
       } catch (error) {

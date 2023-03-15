@@ -18,8 +18,7 @@ export default async function handler(req, res) {
       try {
         const images = await getImages({
           owner: user.id,
-          isDeleted: true,
-          isForeverDeleted: false
+          isDeleted: true
         })
         res.status(200).json(images)
       } catch (error) {

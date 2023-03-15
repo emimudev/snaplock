@@ -20,7 +20,7 @@ export async function getFolders(conditions) {
 }
 
 export async function removeFolder({ id }) {
-  return FolderModel.findByIdAndUpdate(id, { isForeverDeleted: true })
+  return FolderModel.deleteOne({ _id: id })
 }
 
 const DEFAULT_POPULATE_OPTIONS = [

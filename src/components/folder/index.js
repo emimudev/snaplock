@@ -12,6 +12,7 @@ import {
   RiInformationLine
 } from 'react-icons/ri'
 import { RxShare1 } from 'react-icons/rx'
+import { useSWRConfig } from 'swr'
 import useSWRMutation from 'swr/mutation'
 import Button from '../button'
 import ContextMenu from '../context-menu'
@@ -29,6 +30,7 @@ function useFolder(folder) {
   const { id } = folder
   const { activeItem, setActiveItem, showItemViewer } = useMainPageContext()
   const router = useRouter()
+  const { mutate } = useSWRConfig()
   const {
     trigger,
     isMutating: loadingDelete,
@@ -133,6 +135,7 @@ function useFolder(folder) {
       deleteForever(folder)
         .then(() => {
           setActiveItem(null)
+          mutate('/api/storage')
         })
         .catch((err) => {
           console.log(err)

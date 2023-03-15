@@ -13,16 +13,14 @@ export default async function handler(req, res) {
       try {
         const { user } = await getServerSession(req, res, authOptions)
         const images = await getImages({
-          owner: user.id,
-          isForeverDeleted: false
+          owner: user.id
         })
         let size = 0
         images.forEach((img) => {
-          const { folder, isForeverDeleted } = img
-          if (!isForeverDeleted && !folder) {
+          const { folder } = img
+          if (!folder) {
             size += img.file.bytes
-          }
-          if (!isForeverDeleted && folder && !folder?.isForeverDeleted) {
+          } else {
             size += img.file.bytes
           }
         })

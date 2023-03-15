@@ -17,28 +17,18 @@ export default async function handler(req, res) {
 
   switch (method) {
     case 'DELETE':
-      // try {
-      //   const { id } = req.query
-      //   const folder = await removeFolder({ id })
-      //   if (!folder) {
-      //     return res.status(400).json({ success: false })
-      //   }
-      //   res.status(200).json(folder)
-      // } catch (error) {
-      //   console.log({ error })
-      //   res.status(400).json({ success: false })
-      // }
-      // break
       try {
-        const folderToDelete = await FolderModel.findById(id)
-        if (!folderToDelete) {
-          return res.status(404).json({ success: false })
-        }
-        const result = await FolderModel.deleteMany({
+        const foldersToDelete = await FolderModel.find({
           $or: [{ _id: id }, { parentFolders: { $in: [id] } }]
         })
+        if (foldersToDelete.length === 0) {
+          return res.status(404).json({ success: false })
+        }
+        const result = await Promise.all(
+          foldersToDelete.map((folder) => folder.deleteOne())
+        )
         res.status(200).json({
-          folder: folderToDelete,
+          foldersToDelete: foldersToDelete.map((folder) => folder.name),
           result
         })
       } catch (error) {

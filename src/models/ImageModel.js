@@ -61,10 +61,6 @@ const ImageSchema = new mongoose.Schema({
   uploadBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  },
-  isForeverDeleted: {
-    type: Boolean,
-    default: false
   }
 })
 

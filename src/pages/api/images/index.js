@@ -17,7 +17,6 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const { folderId } = req.query
-        console.log({ folderId })
         const images = await getImages({
           owner: user.id,
           isDeleted: false,

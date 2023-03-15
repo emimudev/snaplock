@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import ImageModel from './ImageModel'
 
 const FolderSchema = new mongoose.Schema({
   name: {
@@ -71,20 +72,19 @@ const FolderSchema = new mongoose.Schema({
   isDeleted: {
     type: Boolean,
     default: false
-  },
-  isForeverDeleted: {
-    type: Boolean,
-    default: false
   }
 })
-
-// FolderSchema.index(
-//   { name: 1, owner: 1, parentFolder: 1 },
-//   { unique: true, sparse: true }
-// )
 
 FolderSchema.set('toJSON', {
   virtuals: true
 })
+
+FolderSchema.pre(
+  'deleteOne',
+  { document: true, query: false },
+  async function () {
+    await ImageModel.deleteMany({ folder: this._id })
+  }
+)
 
 export default mongoose.models.Folder || mongoose.model('Folder', FolderSchema)
