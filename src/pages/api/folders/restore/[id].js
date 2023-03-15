@@ -30,7 +30,7 @@ export default async function handler(req, res) {
           { isDeleted: false }
         )
         res.status(200).json({
-          folderId: folderToDelete.name,
+          folder: folderToDelete,
           result
         })
       } catch (error) {
